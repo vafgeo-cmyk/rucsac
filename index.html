@@ -641,7 +641,7 @@ const BANK = [
     understand: ['Find the total number of books','Find the difference between the two types','Find how many more fiction books there are','Find the average number of books'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 0,
-    hint: '<strong>Line up the numbers:</strong><br>1,248 + 976<br>Start from the right: 8+6=14, write 4 carry 1<br>4+7+1=12, write 2 carry 1<br>2+9+1=12, write 2 carry 1<br>1+0+1=2',
+    hint: '<strong>Line up the numbers in columns:</strong><br>1,248<br>+  976<br>Start from the ones column on the right.<br>Work left: ones → tens → hundreds → thousands.<br>Don\'t forget to carry when a column adds up to 10 or more!',
     answer: '2224', unit: 'books',
     checkPrompt: 'You added two numbers around 1,000 and 1,000. Is 2,224 a reasonable total?',
     solution: ['Identify: total = addition','1,248 + 976','Hundreds: 200 + 900 = 1,100','Tens: 40 + 70 = 110','Ones: 8 + 6 = 14','Total: 1,100 + 110 + 14 = 1,224... recheck column addition = 2,224','Answer: 2,224 books']
@@ -652,7 +652,7 @@ const BANK = [
     understand: ['Find the remaining amount of water','Find the total water added','Find the difference in temperature','Find how long evaporation takes'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>Column subtraction:</strong><br>85,000 − 23,750<br>Work right to left, borrowing where needed.',
+    hint: '<strong>Column subtraction — work right to left:</strong><br>  85,000<br>− 23,750<br>Start from the ones column. You\'ll need to borrow from the next column when the top digit is smaller than the bottom digit.',
     answer: '61250', unit: 'litres',
     checkPrompt: 'You took roughly 24,000 from 85,000. Is about 61,000 left a reasonable answer?',
     solution: ['Identify: remaining = subtraction','85,000 − 23,750','85,000 − 20,000 = 65,000','65,000 − 3,750 = 61,250','Answer: 61,250 litres']
@@ -663,7 +663,7 @@ const BANK = [
     understand: ['Find the total loaves made','Find how long it takes to make one loaf','Find the difference between days','Find the average per day'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>48 × 7:</strong><br>40 × 7 = 280<br>8 × 7 = 56<br>280 + 56 = 336',
+    hint: '<strong>Split 48 into parts to make it easier:</strong><br>48 = 40 + 8<br>Multiply each part by 7 separately.<br>Then add the two results together.',
     answer: '336', unit: 'loaves',
     checkPrompt: '48 is close to 50. 50 × 7 = 350. Is 336 close to 350 and reasonable?',
     solution: ['Total = rate × time → multiplication','48 × 7','= (40 × 7) + (8 × 7)','= 280 + 56','= 336 loaves']
@@ -674,7 +674,7 @@ const BANK = [
     understand: ['Find the number of full boxes','Find the total number of eggs','Find the difference in box sizes','Find how many eggs are left over'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>432 ÷ 12:</strong><br>12 × 30 = 360<br>432 − 360 = 72<br>12 × 6 = 72<br>So 30 + 6 = 36',
+    hint: '<strong>Think: how many times does 12 go into 432?</strong><br>Start with a friendly multiple: what is 12 × 10? What is 12 × 30?<br>Find how much is left after your first jump, then keep going.',
     answer: '36', unit: 'boxes',
     checkPrompt: 'Check: 36 × 12 = 432. Does 36 full boxes sound right for 432 eggs?',
     solution: ['Total ÷ group size → division','432 ÷ 12','12 × 30 = 360','432 − 360 = 72','72 ÷ 12 = 6','36 + 6 = 36... total = 36 boxes']
@@ -685,7 +685,7 @@ const BANK = [
     understand: ['Find how much juice is left','Find the total juice bought','Find how many glasses she drank','Find the cost per litre'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>Line up decimal points:</strong><br>1.75 − 0.60<br>Hundredths: 5−0=5<br>Tenths: 7−6=1<br>Ones: 1−0=1',
+    hint: '<strong>Always line up the decimal points before subtracting:</strong><br>  1.75<br>− 0.60<br>Now subtract column by column from right to left: hundredths first, then tenths, then ones.',
     answer: '1.15', unit: 'litres',
     checkPrompt: '1.75 − 0.6: roughly 1.75 − 0.6 = 1.15 ✓',
     solution: ['Remaining = subtraction','1.75 − 0.60','Line up decimal points','Hundredths: 5−0=5','Tenths: 7−6=1','Ones: 1−0=1','Answer: 1.15 litres']
@@ -696,7 +696,7 @@ const BANK = [
     understand: ['Find the fraction of pizza remaining','Find the total number of slices eaten','Find who ate more pizza','Find the cost per slice'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>Total eaten:</strong> 3 + 2 = 5 slices<br><strong>Left:</strong> 8 − 5 = 3 slices<br><strong>Fraction left:</strong> 3/8',
+    hint: '<strong>Two steps:</strong><br>Step 1 — How many slices were eaten altogether? Add Tom\'s and his sister\'s slices.<br>Step 2 — Subtract the eaten slices from the total. Write what\'s left as a fraction over 8.',
     answer: '3/8', unit: '',
     checkPrompt: '5 slices were eaten out of 8. Is 3/8 remaining a sensible answer?',
     solution: ['Slices eaten: 3 + 2 = 5','Slices left: 8 − 5 = 3','Fraction left: 3 out of 8 = 3/8','Answer: 3/8']
@@ -707,7 +707,7 @@ const BANK = [
     understand: ['Find the length of each piece','Find the total length of all pieces','Find how many cuts were made','Find the weight of the rope'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>7.5 ÷ 5:</strong><br>7 ÷ 5 = 1.4<br>0.5 ÷ 5 = 0.1<br>1.4 + 0.1 = 1.5',
+    hint: '<strong>Dividing a decimal by a whole number:</strong><br>Think of 7.5 as 7 and 0.5 separately.<br>Divide each part by 5, then add the results together.',
     answer: '1.5', unit: 'metres',
     checkPrompt: 'Check: 1.5 × 5 = 7.5 ✓ Does 1.5m per piece sound right?',
     solution: ['Equal pieces → division','7.5 ÷ 5','= 1.5 metres per piece','Check: 1.5 × 5 = 7.5 ✓']
@@ -718,7 +718,7 @@ const BANK = [
     understand: ['Find the total distance around the garden','Find the area of the garden','Find the number of plants needed','Find the diagonal of the garden'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 0,
-    hint: '<strong>Perimeter = 2 × (length + width)</strong><br>= 2 × (12 + 8)<br>= 2 × 20<br>= 40',
+    hint: '<strong>Perimeter = the total distance all the way around.</strong><br>A rectangle has 4 sides: two lengths and two widths.<br>Formula: 2 × (length + width)<br>Fill in the numbers from the question and work it out.',
     answer: '40', unit: 'metres',
     checkPrompt: 'Perimeter is all 4 sides: 12+8+12+8 = 40. Does that match?',
     solution: ['Perimeter = total distance around shape','= 2 × (length + width)','= 2 × (12 + 8)','= 2 × 20','= 40 metres']
@@ -729,7 +729,7 @@ const BANK = [
     understand: ['Find the total space covered by the floor','Find the distance around the room','Find the height of the room','Find how many tiles fit in one row'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>Area = length × width</strong><br>= 9 × 7<br>= 63',
+    hint: '<strong>Area = length × width</strong><br>Use the formula and fill in the two measurements from the question.<br>Remember: area is measured in square units (m²).',
     answer: '63', unit: 'm²',
     checkPrompt: 'Area = length × width. 9 × 7 = 63. Does 63 square metres sound right for a classroom?',
     solution: ['Area = length × width','= 9 × 7','= 63 m²']
@@ -740,7 +740,7 @@ const BANK = [
     understand: ['Find the change Liam receives','Find the price of one book','Find the total cost of all books','Find how many books £20 can buy'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>Step 1 — Total cost:</strong> 3 × £4.75 = £14.25<br><strong>Step 2 — Change:</strong> £20.00 − £14.25 = £5.75',
+    hint: '<strong>Two steps — don\'t skip straight to the change:</strong><br>Step 1 — Work out the total cost of all 3 books first.<br>Step 2 — Then subtract that total from £20.00.',
     answer: '5.75', unit: '£',
     checkPrompt: '3 books at ~£5 each ≈ £15. Change from £20 ≈ £5. Is £5.75 reasonable?',
     solution: ['Two steps: multiply then subtract','3 × £4.75 = £14.25','£20.00 − £14.25','= £5.75 change']
@@ -751,7 +751,7 @@ const BANK = [
     understand: ['Find the total cost for the group','Find the cost difference between adult and child','Find the cheapest option','Find the cost for one adult and one child'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>Adults:</strong> 2 × £8.50 = £17.00<br><strong>Children:</strong> 3 × £5.25 = £15.75<br><strong>Total:</strong> £17.00 + £15.75 = £32.75',
+    hint: '<strong>Work out adults and children separately:</strong><br>Step 1 — Multiply the adult price by the number of adults.<br>Step 2 — Multiply the child price by the number of children.<br>Step 3 — Add both totals together.',
     answer: '32.75', unit: '£',
     checkPrompt: '2 adults ≈ £17, 3 children ≈ £16 → total ≈ £33. Is £32.75 reasonable?',
     solution: ['2 × £8.50 = £17.00','3 × £5.25 = £15.75','£17.00 + £15.75 = £32.75']
@@ -762,7 +762,7 @@ const BANK = [
     understand: ['Find the duration of the journey','Find what time the train departs','Find how many stops the train makes','Find the speed of the train'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>09:45 → 10:00</strong> = 15 minutes<br><strong>10:00 → 13:00</strong> = 3 hours<br><strong>13:00 → 13:20</strong> = 20 minutes<br>Total: 3 hours 35 minutes',
+    hint: '<strong>Count on in jumps from the start time:</strong><br>Jump 1 — From 09:45, how many minutes to reach 10:00?<br>Jump 2 — From 10:00, how many hours to reach 13:00?<br>Jump 3 — From 13:00, how many minutes to reach 13:20?<br>Now add all your jumps together.',
     answer: '3h35', unit: '',
     checkPrompt: 'From about 9:45 to 1:20pm — is roughly 3.5 hours a sensible journey time?',
     solution: ['Duration = end − start','09:45 → 10:00 = 15 mins','10:00 → 13:00 = 3 hours','13:00 → 13:20 = 20 mins','Total: 3 hours 35 mins']
@@ -773,7 +773,7 @@ const BANK = [
     understand: ['Find the end time of the film','Find the length of the film','Find the start time of the film','Find how long until midnight'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 0,
-    hint: '<strong>14:35 + 1 hour</strong> = 15:35<br><strong>15:35 + 48 minutes</strong>:<br>15:35 + 25 = 16:00, then + 23 = 16:23',
+    hint: '<strong>Add the hours first, then the minutes:</strong><br>Step 1 — Add 1 hour to the start time. What time do you get?<br>Step 2 — Now add 48 minutes. Tip: bridge through the next hour if it helps.',
     answer: '16:23', unit: '',
     checkPrompt: 'Starting at 2:35pm, add nearly 2 hours — ending around 4:23pm. Does that make sense?',
     solution: ['End time = start + duration','14:35 + 1 hour = 15:35','15:35 + 48 mins','= 15:35 + 25 = 16:00','16:00 + 23 = 16:23','Answer: 16:23']
@@ -784,7 +784,7 @@ const BANK = [
     understand: ['Find the average (mean) score','Find the highest score','Find the range of scores','Find who scored most'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>Step 1 — Add all scores:</strong><br>12+15+9+18+11 = 65<br><strong>Step 2 — Divide by how many:</strong><br>65 ÷ 5 = 13',
+    hint: '<strong>Mean = total of all values ÷ how many values there are</strong><br>Step 1 — Add all five scores together.<br>Step 2 — Divide your total by 5.',
     answer: '13', unit: '',
     checkPrompt: 'All scores are between 9 and 18. Is 13 in that range and plausible as an average?',
     solution: ['Mean = total ÷ count','12+15+9+18+11 = 65','65 ÷ 5 = 13','Answer: 13']
@@ -795,7 +795,7 @@ const BANK = [
     understand: ['Find the range (highest minus lowest)','Find the mean temperature','Find the total of all temperatures','Find the middle temperature'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>Range = highest − lowest</strong><br>Highest: 18°<br>Lowest: 12°<br>18 − 12 = 6',
+    hint: '<strong>Range = highest value − lowest value</strong><br>Step 1 — Look through all seven temperatures and find the highest.<br>Step 2 — Find the lowest.<br>Step 3 — Subtract.',
     answer: '6', unit: '°C',
     checkPrompt: 'Range is the spread from lowest to highest. 18−12=6. Is that right?',
     solution: ['Range = max − min','Max = 18, Min = 12','18 − 12 = 6','Answer: 6°C']
@@ -806,7 +806,7 @@ const BANK = [
     understand: ['Find the cost per apple in each bag','Find the total number of apples','Find the cheapest bag to buy','Find how many bags you need to buy'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>Bag of 6:</strong> £1.80 ÷ 6 = 30p per apple<br><strong>Bag of 4:</strong> £1.40 ÷ 4 = 35p per apple<br>Bag of 6 is cheaper per apple.',
+    hint: '<strong>Find the cost per apple in each bag separately:</strong><br>Bag of 6: divide the price by 6 to get the cost of one apple.<br>Bag of 4: divide the price by 4 to get the cost of one apple.<br>Then compare — which is cheaper per apple?',
     answer: '6', unit: 'bag',
     checkPrompt: '30p vs 35p per apple — is the bag of 6 clearly better value?',
     solution: ['Compare cost per apple','Bag of 6: 180p ÷ 6 = 30p each','Bag of 4: 140p ÷ 4 = 35p each','30p < 35p → bag of 6 is better value']
@@ -817,7 +817,7 @@ const BANK = [
     understand: ['Find the total cost for all children','Find how many pencils are needed','Find the cost of one complete set','Find how many rubbers are left over'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>Pencils:</strong> 28 × 3 = 84 pencils → 84 × 15p = £12.60<br><strong>Rubbers:</strong> 28 × 2 = 56 rubbers → 56 × 25p = £14.00<br><strong>Total:</strong> £12.60 + £14.00 = £26.60',
+    hint: '<strong>Work out pencils and rubbers separately, then add:</strong><br>Step 1 — How many pencils are needed in total? (children × pencils each)<br>Step 2 — Multiply by the price per pencil.<br>Step 3 — Do the same for rubbers.<br>Step 4 — Add both totals and convert pence to pounds.',
     answer: '26.60', unit: '£',
     checkPrompt: 'Roughly 30 children × (3×15p + 2×25p) = 30 × 95p ≈ £28.50. Is £26.60 in that ballpark?',
     solution: ['Pencils: 28×3=84, 84×15p=1260p=£12.60','Rubbers: 28×2=56, 56×25p=1400p=£14.00','Total: £12.60+£14.00=£26.60']
@@ -828,7 +828,7 @@ const BANK = [
     understand: ['Find the number of children who walk','Find the number who do not walk','Find the fraction who cycle','Find how many walk more than 1 mile'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>3/4 of 240:</strong><br>240 ÷ 4 = 60 (one quarter)<br>60 × 3 = 180 (three quarters)',
+    hint: '<strong>To find a fraction of an amount:</strong><br>Step 1 — Divide the total by the denominator (bottom number) to find one part.<br>Step 2 — Multiply that by the numerator (top number) to find your fraction.',
     answer: '180', unit: 'children',
     checkPrompt: 'Three-quarters of 240: half = 120, three-quarters = 180. Does that sound right?',
     solution: ['Fraction of total → multiply','3/4 × 240','= (240 ÷ 4) × 3','= 60 × 3','= 180 children']
@@ -839,7 +839,7 @@ const BANK = [
     understand: ['Find how many minibuses are needed','Find how many children are left over','Find the total number of children','Find how long the journey takes'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>195 ÷ 15:</strong><br>15 × 10 = 150<br>195 − 150 = 45<br>15 × 3 = 45<br>10 + 3 = 13',
+    hint: '<strong>How many times does 15 go into 195?</strong><br>Start with a friendly multiple of 15 — try 15 × 10.<br>Find how many children are left over, then keep dividing until you reach 0.',
     answer: '13', unit: 'minibuses',
     checkPrompt: 'Check: 13 × 15 = 195 ✓ Is 13 minibuses for 195 children reasonable?',
     solution: ['195 ÷ 15','15 × 10 = 150','195 − 150 = 45','45 ÷ 15 = 3','Total: 13 minibuses']
@@ -850,7 +850,7 @@ const BANK = [
     understand: ['Find the total number of seats','Find the number of rows','Find the number of empty seats','Find the average seats per section'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>36 × 125:</strong><br>36 × 100 = 3,600<br>36 × 25 = 900<br>3,600 + 900 = 4,500',
+    hint: '<strong>Split 125 into easier parts:</strong><br>125 = 100 + 25<br>Multiply 36 by each part separately, then add the two results.',
     answer: '4500', unit: 'seats',
     checkPrompt: '36 × 125: about 40 × 125 = 5,000. Is 4,500 a reasonable answer?',
     solution: ['Total = rows × seats per row','36 × 125','= 36 × 100 + 36 × 25','= 3,600 + 900','= 4,500 seats']
@@ -861,7 +861,7 @@ const BANK = [
     understand: ['Find how many ml are left in the jug','Find the total water poured','Find the weight of the water','Find the cost per litre'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 1,
-    hint: '<strong>Convert first:</strong> 2.4 litres = 2,400 ml<br><strong>Subtract:</strong> 2,400 − 850 = 1,550 ml',
+    hint: '<strong>Units must match before you can subtract!</strong><br>Step 1 — Convert 2.4 litres into millilitres. (1 litre = 1,000 ml)<br>Step 2 — Now subtract the amount poured away.',
     answer: '1550', unit: 'ml',
     checkPrompt: 'You started with 2,400ml and poured 850ml. Is 1,550ml remaining sensible?',
     solution: ['Convert: 2.4 litres = 2,400 ml','2,400 − 850 = 1,550 ml','Answer: 1,550 ml']
@@ -872,7 +872,7 @@ const BANK = [
     understand: ['Find the total number of parking spaces','Find the spaces on one level','Find how many cars parked today','Find the number of empty spaces'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>Spaces per level:</strong> 12 × 18 = 216<br><strong>Total:</strong> 216 × 5 = 1,080',
+    hint: '<strong>Build up in stages:</strong><br>Step 1 — How many spaces are in one row?<br>Step 2 — How many spaces are on one level? (rows × spaces per row)<br>Step 3 — How many spaces in the whole car park? (levels × spaces per level)',
     answer: '1080', unit: 'spaces',
     checkPrompt: 'About 200 per floor × 5 = 1,000. Is 1,080 reasonable?',
     solution: ['Spaces per row: 18','Spaces per level: 12 × 18 = 216','Total: 216 × 5 = 1,080 spaces']
@@ -883,7 +883,7 @@ const BANK = [
     understand: ['Find the total amount raised','Find who raised the most','Find the difference between the highest and lowest','Find the average amount raised'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 0,
-    hint: '<strong>34.75 + 28.50 + 41.25:</strong><br>34.75 + 28.50 = 63.25<br>63.25 + 41.25 = 104.50',
+    hint: '<strong>Adding three decimal amounts:</strong><br>Add the first two amounts together, then add the third.<br>Line up the decimal points carefully so you\'re adding the right columns.',
     answer: '104.50', unit: '£',
     checkPrompt: 'Three amounts roughly £35 + £29 + £41 ≈ £105. Is £104.50 close to that?',
     solution: ['Total = sum of all three','£34.75 + £28.50 = £63.25','£63.25 + £41.25 = £104.50']
@@ -894,7 +894,7 @@ const BANK = [
     understand: ['Find the weight of chocolate sweets','Find the weight of non-chocolate sweets','Find the total weight of the bag','Find the number of sweets in the bag'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 2,
-    hint: '<strong>2/5 of 500g:</strong><br>500 ÷ 5 = 100 (one fifth)<br>100 × 2 = 200 (two fifths)',
+    hint: '<strong>To find a fraction of an amount:</strong><br>Step 1 — Divide the total weight by the denominator (bottom number) to find one-fifth.<br>Step 2 — Multiply that by the numerator (top number) to find two-fifths.',
     answer: '200', unit: 'g',
     checkPrompt: 'Two-fifths of 500: one-fifth = 100g, so two-fifths = 200g. Correct?',
     solution: ['2/5 × 500','= (500 ÷ 5) × 2','= 100 × 2','= 200g of chocolate sweets']
@@ -905,7 +905,7 @@ const BANK = [
     understand: ['Find the combined mean of both classes','Find the highest scoring class','Find the difference in means','Find the range of all scores'],
     correctU: 0,
     ops: ['+','-','×','÷'], correctC: 3,
-    hint: '<strong>Class A total:</strong> 72 × 25 = 1,800<br><strong>Class B total:</strong> 68 × 20 = 1,360<br><strong>Combined:</strong> (1,800 + 1,360) ÷ (25 + 20) = 3,160 ÷ 45 ≈ 70.2',
+    hint: '<strong>You can\'t just average the two means — the classes are different sizes!</strong><br>Step 1 — Find Class A\'s total score: mean × number of pupils.<br>Step 2 — Find Class B\'s total score the same way.<br>Step 3 — Add both totals together, then divide by the total number of pupils across both classes.',
     answer: '70.2', unit: '%',
     checkPrompt: 'Both classes scored in the 68–72% range. Is a combined mean of about 70% sensible?',
     solution: ['Class A total: 72 × 25 = 1,800','Class B total: 68 × 20 = 1,360','Combined total: 3,160','Total pupils: 45','Mean: 3,160 ÷ 45 ≈ 70.2%']
