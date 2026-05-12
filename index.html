@@ -3,1138 +3,933 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maths Reasoning Trainer — Year 5</title>
-<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<title>Reasoning Trainer — RUCSAC Method</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #fdf6e3;
-  --bg2: #f5ead0;
-  --bg3: #ede0c0;
-  --card: #ffffff;
-  --card2: #fef9f0;
-  --ink: #2d2016;
-  --ink2: #5c4a2a;
-  --ink3: #8a7355;
-  --red: #c0392b;
-  --green: #1a7a4a;
-  --green-bg: #e8f5ee;
-  --red-bg: #fdecea;
-  --amber: #d4720a;
-  --amber-bg: #fef3e2;
-  --blue: #1a5fa8;
-  --blue-bg: #e8f0fc;
-  --purple: #6b3fa0;
-  --purple-bg: #f0eaf8;
-  --gold: #c8860a;
-  --step1: #e74c3c;
-  --step2: #e67e22;
-  --step3: #27ae60;
-  --step4: #2980b9;
-  --step5: #8e44ad;
-  --step6: #16a085;
-  --radius: 14px;
-  --radius-lg: 20px;
-  --shadow: 0 2px 12px rgba(45,32,22,0.1);
-  --shadow-lg: 0 8px 32px rgba(45,32,22,0.15);
-  --font: 'Quicksand', sans-serif;
-  --font-display: 'Righteous', sans-serif;
+  --bg: #1c1a14;
+  --card: #2a2720;
+  --card2: #332f24;
+  --border: #4a4535;
+  --amber: #f0a832;
+  --amber-light: #ffd280;
+  --amber-dark: #c07818;
+  --green: #5bbf6a;
+  --green-dark: #3a9448;
+  --red: #e05555;
+  --red-dark: #b83030;
+  --blue: #5b9abf;
+  --parchment: #f5edd8;
+  --text: #f0e8d0;
+  --muted: #9a9070;
+  --step-r: #e07040;
+  --step-u: #d060b0;
+  --step-c: #5b9abf;
+  --step-s: #5bbf6a;
+  --step-a: #f0a832;
+  --step-ck: #8060d0;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: var(--font);
   background: var(--bg);
-  color: var(--ink);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+  padding: 20px 16px 40px;
 }
 
-/* Subtle grid texture */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(45,32,22,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(45,32,22,0.03) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none; z-index: 0;
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── WELCOME ── */
+#screen-welcome {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 40px;
 }
-
-.page { position: relative; z-index: 1; max-width: 740px; margin: 0 auto; padding: 24px 20px 80px; }
-
-/* Header */
-.header { text-align: center; margin-bottom: 36px; animation: slideDown 0.6s ease both; }
-.header-stamp {
+.welcome-badge {
   display: inline-block;
-  background: var(--ink); color: var(--bg);
-  font-family: var(--font-display);
-  font-size: 11px; letter-spacing: 0.12em;
+  background: var(--amber);
+  color: #1c1a14;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 5px 16px; border-radius: 4px;
-  margin-bottom: 14px;
-}
-.header h1 {
-  font-family: var(--font-display);
-  font-size: clamp(30px, 7vw, 48px);
-  color: var(--ink);
-  line-height: 1.1;
-  margin-bottom: 6px;
-}
-.header h1 span { color: var(--amber); }
-.header p { color: var(--ink2); font-size: 15px; font-weight: 600; }
-
-/* ── RUCSAC EXPLAINER ── */
-#screen-rucsac { animation: fadeUp 0.5s ease both; }
-.rucsac-intro {
-  background: var(--card);
-  border: 2px solid var(--bg3);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-}
-.rucsac-intro h2 { font-family: var(--font-display); font-size: 22px; margin-bottom: 6px; }
-.rucsac-intro p { color: var(--ink2); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-
-.rucsac-steps { display: grid; gap: 10px; }
-.rucsac-step {
-  display: flex; align-items: center; gap: 14px;
-  background: var(--bg2); border-radius: var(--radius);
-  padding: 14px 16px;
-}
-.step-letter {
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-size: 18px;
-  color: #fff; flex-shrink: 0;
-}
-.step-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-.step-info p { font-size: 13px; color: var(--ink2); line-height: 1.4; }
-
-/* ── PLAYER SELECT ── */
-#screen-player { animation: fadeUp 0.5s ease both; }
-.player-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
-.player-card {
-  background: var(--card); border: 2.5px solid var(--bg3);
-  border-radius: var(--radius-lg); padding: 28px 20px;
-  text-align: center; cursor: pointer;
-  transition: all 0.2s ease; box-shadow: var(--shadow);
-}
-.player-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--amber); }
-.player-card .emoji { font-size: 44px; display: block; margin-bottom: 10px; }
-.player-card .pname { font-family: var(--font-display); font-size: 20px; color: var(--ink); }
-
-/* ── GAME SCREEN ── */
-#screen-game { animation: fadeUp 0.5s ease both; }
-
-.game-topbar {
-  display: flex; align-items: center; justify-content: space-between;
+  padding: 4px 14px;
+  border-radius: 20px;
   margin-bottom: 16px;
 }
-.player-pill {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--card); border: 1.5px solid var(--bg3);
-  border-radius: 50px; padding: 7px 16px;
-  font-weight: 700; font-size: 14px;
-  box-shadow: var(--shadow);
+#screen-welcome h1 { font-size: 2.4rem; color: var(--amber-light); line-height: 1.2; margin-bottom: 10px; }
+#screen-welcome p { color: var(--muted); font-size: 0.95rem; margin-bottom: 32px; line-height: 1.6; }
+
+.player-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
 }
-.score-pill {
-  background: var(--ink); color: var(--bg);
-  border-radius: 50px; padding: 7px 18px;
-  font-family: var(--font-display); font-size: 15px;
+.player-card {
+  flex: 1;
+  max-width: 200px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.player-card:hover { border-color: var(--amber); transform: translateY(-3px); }
+.player-card.selected { border-color: var(--amber); background: var(--card2); box-shadow: 0 0 0 3px rgba(240,168,50,0.25); }
+.player-card .avatar { font-size: 2.8rem; margin-bottom: 10px; }
+.player-card .name { font-weight: 800; font-size: 1.1rem; }
+
+.btn-start {
+  background: var(--amber);
+  color: #1c1a14;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  padding: 14px 40px;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.btn-start.ready { opacity: 1; pointer-events: all; }
+.btn-start.ready:hover { background: var(--amber-light); transform: translateY(-2px); }
+
+/* ── RUCSAC LEGEND ── */
+.rucsac-legend {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.rucsac-legend span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
 }
 
-.progress-track {
-  background: var(--bg3); border-radius: 50px;
-  height: 7px; margin-bottom: 22px; overflow: hidden;
+/* ── QUIZ SCREEN ── */
+#screen-quiz { max-width: 640px; margin: 0 auto; }
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-.progress-fill {
-  height: 100%; background: linear-gradient(90deg, var(--amber), var(--gold));
-  border-radius: 50px; transition: width 0.5s ease;
+.quiz-player-tag {
+  font-weight: 800;
+  color: var(--amber);
+  font-size: 0.9rem;
+}
+.quiz-progress {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.progress-bar-wrap {
+  background: var(--card);
+  border-radius: 10px;
+  height: 6px;
+  margin-bottom: 20px;
+}
+.progress-bar-fill {
+  background: var(--amber);
+  height: 6px;
+  border-radius: 10px;
+  transition: width 0.4s ease;
 }
 
-/* Question card */
+/* RUCSAC STEP TRACKER */
+.step-tracker {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.step-dot {
+  flex: 1;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: var(--card);
+  color: var(--muted);
+  border: 2px solid var(--border);
+  transition: all 0.3s;
+}
+.step-dot.active { color: #fff; border-color: transparent; }
+.step-dot.done { opacity: 0.5; }
+.step-dot[data-step="R"].active { background: var(--step-r); }
+.step-dot[data-step="U"].active { background: var(--step-u); }
+.step-dot[data-step="C"].active { background: var(--step-c); }
+.step-dot[data-step="S"].active { background: var(--step-s); }
+.step-dot[data-step="A"].active { background: var(--step-a); }
+.step-dot[data-step="CK"].active { background: var(--step-ck); }
+
+/* QUESTION CARD */
 .q-card {
   background: var(--card);
-  border: 2px solid var(--bg3);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
 }
-.q-topic-tag {
-  display: inline-block;
-  background: var(--amber-bg); color: var(--amber);
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; padding: 4px 12px; border-radius: 50px;
+.q-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.q-label-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+}
+.q-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--parchment);
+}
+
+/* STEP PANELS */
+.step-panel {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 12px;
+  display: none;
+}
+.step-panel.visible { display: block; animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 14px;
 }
-.q-number { font-size: 12px; color: var(--ink3); font-weight: 600; margin-bottom: 6px; }
-.q-text {
-  font-size: 17px; font-weight: 600; line-height: 1.6;
-  color: var(--ink);
-}
-.q-text strong { color: var(--blue); }
-
-/* ── RUCSAC SCAFFOLD ── */
-.scaffold {
-  display: grid; gap: 12px;
-  margin-bottom: 20px;
-}
-
-.scaffold-step {
-  background: var(--card);
-  border: 2px solid var(--bg3);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: border-color 0.2s;
-}
-.scaffold-step.active { border-color: var(--amber); }
-.scaffold-step.done { border-color: var(--green); }
-.scaffold-step.locked { opacity: 0.5; }
-
-.scaffold-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px;
-  background: var(--bg2);
-}
-.s-badge {
-  width: 30px; height: 30px; border-radius: 50%;
+.step-badge {
+  width: 32px; height: 32px;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-size: 13px;
-  color: #fff; flex-shrink: 0;
+  font-weight: 800; font-size: 0.8rem;
+  color: #fff;
+  flex-shrink: 0;
 }
-.s-label { font-size: 13px; font-weight: 700; color: var(--ink); }
-.s-sublabel { font-size: 12px; color: var(--ink3); margin-top: 1px; }
-.s-tick { margin-left: auto; font-size: 18px; display: none; }
-.scaffold-step.done .s-tick { display: block; }
+.step-badge.R { background: var(--step-r); }
+.step-badge.U { background: var(--step-u); }
+.step-badge.C { background: var(--step-c); }
+.step-badge.S { background: var(--step-s); }
+.step-badge.A { background: var(--step-a); color: #1c1a14; }
+.step-badge.CK { background: var(--step-ck); }
+.step-badge.WS { background: var(--muted); }
 
-.scaffold-body { padding: 14px 16px; }
+.step-title { font-weight: 800; font-size: 0.95rem; }
+.step-sub { font-size: 0.78rem; color: var(--muted); }
 
-/* Step 1: What is the question asking? */
-.step-options { display: grid; gap: 8px; }
-.step-opt {
-  background: var(--bg2); border: 2px solid transparent;
-  border-radius: 10px; padding: 11px 14px;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: all 0.15s ease; text-align: left;
-  color: var(--ink);
+/* OPTIONS GRID */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
-.step-opt:hover { border-color: var(--amber); background: var(--amber-bg); }
-.step-opt.selected-correct { border-color: var(--green); background: var(--green-bg); color: var(--green); }
-.step-opt.selected-wrong { border-color: var(--red); background: var(--red-bg); color: var(--red); }
-.step-opt:disabled { cursor: default; }
+.opt-btn {
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 12px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+}
+.opt-btn:hover:not(:disabled) { border-color: var(--amber); background: #3a3520; }
+.opt-btn.correct { border-color: var(--green); background: rgba(91,191,106,0.15); color: var(--green); }
+.opt-btn.wrong { border-color: var(--red); background: rgba(224,85,85,0.12); color: var(--red); }
+.opt-btn.revealed { border-color: var(--green); background: rgba(91,191,106,0.1); color: var(--green); }
+.opt-btn:disabled { cursor: default; }
 
-/* Step 2: Operation */
-.op-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+/* OPERATION BUTTONS */
+.op-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
 .op-btn {
-  background: var(--bg2); border: 2px solid transparent;
-  border-radius: 10px; padding: 14px 8px;
-  font-family: var(--font-display); font-size: 22px;
-  cursor: pointer; transition: all 0.15s;
-  text-align: center; color: var(--ink);
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  padding: 16px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.op-btn:hover { border-color: var(--amber); background: var(--amber-bg); transform: scale(1.05); }
-.op-btn.selected-correct { border-color: var(--green); background: var(--green-bg); }
-.op-btn.selected-wrong { border-color: var(--red); background: var(--red-bg); }
-.op-label { font-size: 10px; font-family: var(--font); font-weight: 700; margin-top: 4px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.04em; }
+.op-btn:hover:not(:disabled) { border-color: var(--blue); background: #283040; }
+.op-btn.correct { border-color: var(--green); background: rgba(91,191,106,0.15); }
+.op-btn.wrong { border-color: var(--red); background: rgba(224,85,85,0.12); }
+.op-btn.revealed { border-color: var(--green); background: rgba(91,191,106,0.1); }
+.op-btn:disabled { cursor: default; }
 
-/* Step 3: Working box */
-.working-area {
-  background: var(--bg2); border: 2px dashed var(--bg3);
-  border-radius: 10px; padding: 16px;
-  min-height: 80px;
-  font-size: 14px; color: var(--ink2); line-height: 1.7;
+/* HINT BOX */
+.hint-box {
+  background: #1e2a1e;
+  border: 1px solid #3a5a3a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #b0e0b0;
 }
+.hint-box strong { color: var(--green); }
 
-/* Step 4: Answer input */
-.answer-row { display: flex; gap: 10px; align-items: stretch; }
+/* ANSWER INPUT */
+.answer-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 .answer-input {
   flex: 1;
-  background: var(--bg2); border: 2px solid var(--bg3);
-  border-radius: 10px; padding: 13px 16px;
-  font-family: var(--font); font-size: 20px; font-weight: 700;
-  color: var(--ink); outline: none;
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--parchment);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 14px;
+  outline: none;
   transition: border-color 0.2s;
 }
-.answer-input:focus { border-color: var(--amber); background: var(--card); }
-.answer-input.correct { border-color: var(--green); background: var(--green-bg); }
-.answer-input.incorrect { border-color: var(--red); background: var(--red-bg); }
+.answer-input:focus { border-color: var(--amber); }
+.answer-input.correct { border-color: var(--green); }
+.answer-input.wrong { border-color: var(--red); }
 .answer-unit {
-  background: var(--bg3); border-radius: 10px;
-  padding: 13px 16px; font-size: 14px; font-weight: 700;
-  color: var(--ink2); display: flex; align-items: center;
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 14px;
   white-space: nowrap;
 }
+.btn-check {
+  background: var(--amber);
+  color: #1c1a14;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-check:hover { background: var(--amber-light); }
 
+/* FEEDBACK BANNER */
+.feedback-banner {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  display: none;
+  margin-top: 10px;
+}
+.feedback-banner.show { display: block; }
+.feedback-banner.good { background: rgba(91,191,106,0.15); border: 1px solid var(--green); color: var(--green); }
+.feedback-banner.bad { background: rgba(224,85,85,0.12); border: 1px solid var(--red); color: #f09090; }
+
+/* CHECK STEP BUTTONS */
+.check-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 .check-btn {
-  background: var(--ink); color: var(--bg);
-  border: none; border-radius: 10px;
-  padding: 13px 22px; font-family: var(--font);
-  font-size: 15px; font-weight: 700;
-  cursor: pointer; transition: all 0.2s;
-  white-space: nowrap;
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 14px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
-.check-btn:hover { background: var(--amber); transform: translateY(-1px); }
+.check-btn:hover:not(:disabled) { border-color: var(--amber); }
+.check-btn.yes-btn:hover:not(:disabled) { border-color: var(--green); background: rgba(91,191,106,0.1); }
+.check-btn.no-btn:hover:not(:disabled) { border-color: var(--amber); background: rgba(240,168,50,0.1); }
+.check-btn:disabled { cursor: default; opacity: 0.6; }
 
-/* Answer feedback */
-.answer-feedback {
-  margin-top: 12px; border-radius: 10px; padding: 14px 16px;
-  display: none; animation: popIn 0.3s ease;
+/* WORKED SOLUTION */
+.ws-steps { list-style: none; padding: 0; }
+.ws-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
-.answer-feedback.correct { background: var(--green-bg); border: 1.5px solid rgba(26,122,74,0.25); }
-.answer-feedback.incorrect { background: var(--red-bg); border: 1.5px solid rgba(192,57,43,0.25); }
-.af-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-.answer-feedback.correct .af-title { color: var(--green); }
-.answer-feedback.incorrect .af-title { color: var(--red); }
-.af-body { font-size: 13px; color: var(--ink2); line-height: 1.5; }
-
-/* Step 5: Does it make sense? */
-.sense-row { display: flex; gap: 10px; }
-.sense-btn {
-  flex: 1; padding: 12px;
-  border: 2px solid var(--bg3); border-radius: 10px;
-  background: var(--bg2); font-family: var(--font);
-  font-size: 14px; font-weight: 700; cursor: pointer;
-  transition: all 0.15s; color: var(--ink);
-}
-.sense-btn:hover { border-color: var(--amber); }
-.sense-btn.selected { border-color: var(--green); background: var(--green-bg); color: var(--green); }
-
-/* Step 6: Worked solution */
-.solution-box {
-  background: var(--purple-bg);
-  border: 2px solid rgba(107,63,160,0.2);
-  border-radius: 10px; padding: 16px;
-}
-.solution-box h4 { font-size: 13px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.solution-steps { display: grid; gap: 6px; }
-.sol-step {
-  display: flex; gap: 10px; align-items: flex-start;
-  font-size: 13px; line-height: 1.5; color: var(--ink2);
-}
-.sol-num {
-  background: var(--purple); color: #fff;
-  border-radius: 50%; width: 20px; height: 20px;
+.ws-steps li:last-child { border-bottom: none; }
+.ws-num {
+  min-width: 22px; height: 22px;
+  background: var(--amber);
+  color: #1c1a14;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  font-weight: 800; font-size: 0.72rem;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
-.sol-text strong { color: var(--ink); }
 
-/* Next button */
-.next-btn {
-  width: 100%; padding: 16px;
-  background: var(--ink); color: var(--bg);
-  border: none; border-radius: var(--radius);
-  font-family: var(--font-display); font-size: 16px;
-  cursor: pointer; transition: all 0.2s;
-  display: none; margin-top: 4px;
+/* NEXT BUTTON */
+.btn-next {
+  width: 100%;
+  background: var(--amber);
+  color: #1c1a14;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.2s;
+  display: none;
 }
-.next-btn:hover { background: var(--amber); }
-.next-btn.visible { display: block; animation: fadeUp 0.3s ease; }
+.btn-next.visible { display: block; animation: slideIn 0.3s ease; }
+.btn-next:hover { background: var(--amber-light); }
 
-/* Back button */
-.back-btn {
-  background: none; border: none; color: var(--ink3);
-  font-family: var(--font); font-size: 14px; font-weight: 700;
-  cursor: pointer; display: flex; align-items: center; gap: 6px;
-  padding: 0; margin-bottom: 20px; transition: color 0.15s;
+/* ── RESULTS ── */
+#screen-results { max-width: 560px; margin: 0 auto; text-align: center; padding-top: 30px; }
+.trophy-big { font-size: 5rem; margin-bottom: 10px; }
+#screen-results h2 { font-size: 2rem; color: var(--amber-light); margin-bottom: 8px; }
+.result-msg { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; line-height: 1.6; }
+.score-circle {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--amber);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  margin: 0 auto 28px;
 }
-.back-btn:hover { color: var(--ink); }
+.score-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--amber); font-weight: 700; }
+.score-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
 
-/* Results */
-#screen-results { animation: fadeUp 0.5s ease both; text-align: center; }
-.trophy { font-size: 72px; margin-bottom: 16px; display: block; animation: bounce 0.6s ease; }
-.results-score-big {
-  font-family: var(--font-display);
-  font-size: 52px; color: var(--amber); line-height: 1;
-  margin-bottom: 4px;
+.breakdown-title { font-weight: 800; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; text-align: left; }
+.skill-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px; text-align: left;
 }
-.results-denom { font-size: 20px; color: var(--ink3); margin-bottom: 16px; }
-.results-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 8px; }
-.results-msg { color: var(--ink2); font-size: 15px; line-height: 1.6; margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.skill-name { font-size: 0.82rem; font-weight: 700; min-width: 120px; }
+.skill-bar-wrap { flex: 1; background: var(--card); border-radius: 6px; height: 8px; }
+.skill-bar { background: var(--amber); height: 8px; border-radius: 6px; transition: width 0.8s ease; }
+.skill-pct { font-size: 0.78rem; color: var(--muted); min-width: 36px; text-align: right; }
 
-.results-stats {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 12px; margin-bottom: 28px;
+.btn-again {
+  background: var(--amber);
+  color: #1c1a14;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 14px 36px;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: all 0.2s;
 }
-.rstat {
-  background: var(--card); border: 2px solid var(--bg3);
-  border-radius: var(--radius); padding: 16px 10px;
-  box-shadow: var(--shadow);
-}
-.rstat-val { font-family: var(--font-display); font-size: 28px; }
-.rstat-label { font-size: 11px; color: var(--ink3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
-
-.skill-breakdown {
-  background: var(--card); border: 2px solid var(--bg3);
-  border-radius: var(--radius); padding: 20px;
-  text-align: left; margin-bottom: 24px;
-  box-shadow: var(--shadow);
-}
-.skill-breakdown h3 { font-size: 13px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
-.skill-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.skill-row:last-child { margin-bottom: 0; }
-.skill-name { font-size: 13px; font-weight: 700; min-width: 120px; }
-.skill-bar-wrap { flex: 1; background: var(--bg3); border-radius: 50px; height: 8px; overflow: hidden; }
-.skill-bar { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--amber), var(--gold)); }
-.skill-pct { font-size: 12px; font-weight: 700; color: var(--ink3); min-width: 36px; text-align: right; }
-
-.big-btn {
-  width: 100%; padding: 16px;
-  background: var(--ink); color: var(--bg);
-  border: none; border-radius: var(--radius);
-  font-family: var(--font-display); font-size: 16px;
-  cursor: pointer; transition: all 0.2s; margin-bottom: 10px;
-}
-.big-btn:hover { background: var(--amber); }
-.big-btn.outline {
-  background: transparent; color: var(--ink);
-  border: 2px solid var(--bg3);
-}
-.big-btn.outline:hover { border-color: var(--amber); background: var(--amber-bg); }
-
-/* Step feedback inline */
-.step-feedback {
-  margin-top: 8px; padding: 10px 12px;
-  border-radius: 8px; font-size: 13px;
-  display: none; animation: popIn 0.25s ease;
-}
-.step-feedback.ok { background: var(--green-bg); color: var(--green); font-weight: 700; }
-.step-feedback.nope { background: var(--red-bg); color: var(--red); font-weight: 700; }
-
-/* Animations */
-@keyframes slideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
-@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-@keyframes popIn { from { opacity:0; transform:scale(0.93); } to { opacity:1; transform:scale(1); } }
-@keyframes bounce { 0%,100%{transform:scale(1)} 40%{transform:scale(1.15)} 70%{transform:scale(0.95)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-
-.shake { animation: shake 0.35s ease; }
-.hidden { display: none !important; }
+.btn-again:hover { background: var(--amber-light); }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-stamp">🧮 Year 5 Maths</div>
-    <h1>Reasoning <span>Trainer</span></h1>
-    <p>Learn to break down any problem — step by step</p>
+<!-- ══ WELCOME ══ -->
+<div id="screen-welcome" class="screen active">
+  <div class="welcome-badge">🧠 Year 5 Maths</div>
+  <h1>Reasoning<br>Trainer</h1>
+  <p>Step-by-step problem solving using the<br><strong>RUCSAC</strong> method — the same one your teacher uses.</p>
+
+  <div class="rucsac-legend">
+    <span style="background:var(--step-r);color:#fff">R — Read</span>
+    <span style="background:var(--step-u);color:#fff">U — Understand</span>
+    <span style="background:var(--step-c);color:#fff">C — Choose</span>
+    <span style="background:var(--step-s);color:#fff">S — Solve</span>
+    <span style="background:var(--step-a);color:#1c1a14">A — Answer</span>
+    <span style="background:var(--step-ck);color:#fff">C — Check</span>
   </div>
 
-  <!-- RUCSAC explainer (shown once) -->
-  <div id="screen-rucsac">
-    <div class="rucsac-intro">
-      <h2>🗺️ Your Problem-Solving Map</h2>
-      <p>Every maths problem can be solved using the same 6 steps. We call it <strong>RUCSAC</strong>. Once you know it, no word problem can trick you.</p>
-      <div class="rucsac-steps">
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step1)">R</div>
-          <div class="step-info"><h4>Read</h4><p>Read the whole problem carefully. Don't rush.</p></div>
-        </div>
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step2)">U</div>
-          <div class="step-info"><h4>Understand</h4><p>What is the question actually asking you to find?</p></div>
-        </div>
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step3)">C</div>
-          <div class="step-info"><h4>Choose</h4><p>Which operation(s) will you need? Add, subtract, multiply, divide?</p></div>
-        </div>
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step4)">S</div>
-          <div class="step-info"><h4>Solve</h4><p>Show your working. Write every step down.</p></div>
-        </div>
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step5)">A</div>
-          <div class="step-info"><h4>Answer</h4><p>Write your answer clearly with the right units.</p></div>
-        </div>
-        <div class="rucsac-step">
-          <div class="step-letter" style="background:var(--step6)">C</div>
-          <div class="step-info"><h4>Check</h4><p>Does your answer make sense? Is it roughly right?</p></div>
-        </div>
-      </div>
+  <p style="margin-bottom:20px;font-size:0.9rem;">Who's practising today?</p>
+  <div class="player-cards">
+    <div class="player-card" onclick="selectPlayer('Viktor',this)">
+      <div class="avatar">🦁</div>
+      <div class="name">Viktor</div>
     </div>
-    <button class="big-btn" onclick="showScreen('player')">Got it — let's go! →</button>
-  </div>
-
-  <!-- Player select -->
-  <div id="screen-player" class="hidden">
-    <div style="text-align:center; font-size:15px; font-weight:700; color:var(--ink2)">Who's solving problems today?</div>
-    <div class="player-row">
-      <div class="player-card" onclick="selectPlayer('Viktor','🦁')">
-        <span class="emoji">🦁</span>
-        <div class="pname">Viktor</div>
-      </div>
-      <div class="player-card" onclick="selectPlayer('Philip','🚀')">
-        <span class="emoji">🚀</span>
-        <div class="pname">Philip</div>
-      </div>
+    <div class="player-card" onclick="selectPlayer('Philip',this)">
+      <div class="avatar">🐯</div>
+      <div class="name">Philip</div>
     </div>
   </div>
+  <button class="btn-start" id="btn-start" onclick="startQuiz()">Start Training →</button>
+</div>
 
-  <!-- Game screen -->
-  <div id="screen-game" class="hidden">
-    <div class="game-topbar">
-      <div class="player-pill">
-        <span id="g-emoji"></span>
-        <span id="g-name"></span>
-      </div>
-      <div class="score-pill">⭐ <span id="g-score">0</span> / <span id="g-total">0</span></div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="g-prog" style="width:0%"></div>
-    </div>
+<!-- ══ QUIZ ══ -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-header">
+    <span class="quiz-player-tag" id="quiz-player-tag">Viktor 🦁</span>
+    <span class="quiz-progress" id="quiz-progress">Question 1 of 15</span>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
 
-    <!-- Question -->
+  <div class="step-tracker" id="step-tracker">
+    <div class="step-dot" data-step="R">R</div>
+    <div class="step-dot" data-step="U">U</div>
+    <div class="step-dot" data-step="C">C</div>
+    <div class="step-dot" data-step="S">S</div>
+    <div class="step-dot" data-step="A">A</div>
+    <div class="step-dot" data-step="CK">CK</div>
+  </div>
+
+  <!-- R: READ -->
+  <div class="step-panel visible" id="panel-R">
+    <div class="step-header">
+      <div class="step-badge R">R</div>
+      <div><div class="step-title">Read the problem</div><div class="step-sub">Read it carefully — twice if you need to</div></div>
+    </div>
     <div class="q-card">
-      <div class="q-topic-tag" id="g-topic">Topic</div>
-      <div class="q-number" id="g-qnum">Question 1 of 15</div>
-      <div class="q-text" id="g-qtext">Loading...</div>
+      <div class="q-label"><div class="q-label-dot"></div>Question</div>
+      <div class="q-text" id="q-text">Loading…</div>
     </div>
-
-    <!-- SCAFFOLD STEPS -->
-    <div class="scaffold">
-
-      <!-- Step U: Understand -->
-      <div class="scaffold-step active" id="step-U">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--step2)">U</div>
-          <div>
-            <div class="s-label">Understand</div>
-            <div class="s-sublabel">What is this question asking you to find?</div>
-          </div>
-          <div class="s-tick">✅</div>
-        </div>
-        <div class="scaffold-body">
-          <div class="step-options" id="u-options"></div>
-          <div class="step-feedback" id="u-feedback"></div>
-        </div>
-      </div>
-
-      <!-- Step C: Choose operation -->
-      <div class="scaffold-step locked" id="step-C">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--step3)">C</div>
-          <div>
-            <div class="s-label">Choose</div>
-            <div class="s-sublabel">Which operation(s) will you use?</div>
-          </div>
-          <div class="s-tick">✅</div>
-        </div>
-        <div class="scaffold-body">
-          <div class="op-grid">
-            <div onclick="selectOp('+')" class="op-btn" data-op="+">
-              ＋<div class="op-label">Add</div>
-            </div>
-            <div onclick="selectOp('-')" class="op-btn" data-op="-">
-              －<div class="op-label">Subtract</div>
-            </div>
-            <div onclick="selectOp('×')" class="op-btn" data-op="×">
-              ×<div class="op-label">Multiply</div>
-            </div>
-            <div onclick="selectOp('÷')" class="op-btn" data-op="÷">
-              ÷<div class="op-label">Divide</div>
-            </div>
-          </div>
-          <div class="step-feedback" id="c-feedback"></div>
-        </div>
-      </div>
-
-      <!-- Step S: Solve / working -->
-      <div class="scaffold-step locked" id="step-S">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--step4)">S</div>
-          <div>
-            <div class="s-label">Solve</div>
-            <div class="s-sublabel">Here's what to work out — follow each step</div>
-          </div>
-          <div class="s-tick">✅</div>
-        </div>
-        <div class="scaffold-body">
-          <div class="working-area" id="s-working">Loading working steps...</div>
-        </div>
-      </div>
-
-      <!-- Step A: Answer -->
-      <div class="scaffold-step locked" id="step-A">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--step5)">A</div>
-          <div>
-            <div class="s-label">Answer</div>
-            <div class="s-sublabel">Type your answer below</div>
-          </div>
-          <div class="s-tick">✅</div>
-        </div>
-        <div class="scaffold-body">
-          <div class="answer-row">
-            <input type="number" class="answer-input" id="a-input" placeholder="?" onkeydown="handleAnswerKey(event)" step="any"/>
-            <div class="answer-unit" id="a-unit"></div>
-            <button class="check-btn" onclick="checkAnswer()">Check ✓</button>
-          </div>
-          <div class="answer-feedback" id="a-feedback">
-            <div class="af-title" id="af-title"></div>
-            <div class="af-body" id="af-body"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step C2: Check (sense check) -->
-      <div class="scaffold-step locked" id="step-C2">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--step6)">C</div>
-          <div>
-            <div class="s-label">Check</div>
-            <div class="s-sublabel">Does your answer make sense?</div>
-          </div>
-          <div class="s-tick">✅</div>
-        </div>
-        <div class="scaffold-body">
-          <div style="font-size:14px; color:var(--ink2); margin-bottom:10px;" id="c2-prompt"></div>
-          <div class="sense-row">
-            <button class="sense-btn" onclick="selectSense(true)">✅ Yes, it makes sense</button>
-            <button class="sense-btn" onclick="selectSense(false)">🤔 Not sure</button>
-          </div>
-          <div class="step-feedback" id="c2-feedback"></div>
-        </div>
-      </div>
-
-      <!-- Worked solution -->
-      <div class="scaffold-step locked" id="step-sol">
-        <div class="scaffold-header">
-          <div class="s-badge" style="background:var(--purple)">★</div>
-          <div>
-            <div class="s-label">Worked Solution</div>
-            <div class="s-sublabel">Here's how to think through it</div>
-          </div>
-        </div>
-        <div class="scaffold-body">
-          <div class="solution-box">
-            <h4>📋 Full working</h4>
-            <div class="solution-steps" id="sol-steps"></div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end scaffold -->
-
-    <button class="next-btn" id="g-next-btn" onclick="nextQuestion()">Next Problem →</button>
+    <button class="opt-btn" style="width:100%" onclick="advanceStep('U')">✅ I've read it — next step</button>
   </div>
 
-  <!-- Results -->
-  <div id="screen-results" class="hidden">
-    <span class="trophy" id="r-trophy">🏆</span>
-    <div class="results-score-big" id="r-score">0</div>
-    <div class="results-denom">out of <span id="r-total">15</span></div>
-    <div class="results-title" id="r-title">Well done!</div>
-    <div class="results-msg" id="r-msg"></div>
-
-    <div class="results-stats">
-      <div class="rstat">
-        <div class="rstat-val" id="rs-correct" style="color:var(--green)">0</div>
-        <div class="rstat-label">Correct</div>
-      </div>
-      <div class="rstat">
-        <div class="rstat-val" id="rs-wrong" style="color:var(--red)">0</div>
-        <div class="rstat-label">Wrong</div>
-      </div>
-      <div class="rstat">
-        <div class="rstat-val" id="rs-pct" style="color:var(--amber)">0%</div>
-        <div class="rstat-label">Score</div>
-      </div>
+  <!-- U: UNDERSTAND -->
+  <div class="step-panel" id="panel-U">
+    <div class="step-header">
+      <div class="step-badge U">U</div>
+      <div><div class="step-title">Understand</div><div class="step-sub">What is the question actually asking?</div></div>
     </div>
-
-    <div class="skill-breakdown">
-      <h3>📊 By topic</h3>
-      <div id="rs-breakdown"></div>
-    </div>
-
-    <button class="big-btn" onclick="restartGame()">Try again 🔄</button>
-    <button class="big-btn outline" onclick="showScreen('player')">Change player</button>
+    <div class="options-grid" id="u-options"></div>
+    <div class="feedback-banner" id="u-feedback"></div>
   </div>
 
-</div><!-- end page -->
+  <!-- C: CHOOSE -->
+  <div class="step-panel" id="panel-C">
+    <div class="step-header">
+      <div class="step-badge C">C</div>
+      <div><div class="step-title">Choose the operation</div><div class="step-sub">Which maths operation will you use?</div></div>
+    </div>
+    <div class="op-grid" id="c-options"></div>
+    <div class="feedback-banner" id="c-feedback"></div>
+  </div>
+
+  <!-- S: SOLVE -->
+  <div class="step-panel" id="panel-S">
+    <div class="step-header">
+      <div class="step-badge S">S</div>
+      <div><div class="step-title">Solve it</div><div class="step-sub">Here's how to break it down:</div></div>
+    </div>
+    <div class="hint-box" id="s-hint"></div>
+    <button class="opt-btn" style="width:100%;margin-top:12px" onclick="advanceStep('A')">✅ I've worked it out — enter my answer</button>
+  </div>
+
+  <!-- A: ANSWER -->
+  <div class="step-panel" id="panel-A">
+    <div class="step-header">
+      <div class="step-badge A">A</div>
+      <div><div class="step-title">Answer</div><div class="step-sub">Type your answer below</div></div>
+    </div>
+    <div class="answer-row">
+      <input class="answer-input" id="a-input" type="text" placeholder="Your answer…" onkeydown="if(event.key==='Enter')checkAnswer()">
+      <span class="answer-unit" id="a-unit"></span>
+      <button class="btn-check" onclick="checkAnswer()">Check ✓</button>
+    </div>
+    <div class="feedback-banner" id="a-feedback"></div>
+  </div>
+
+  <!-- CK: CHECK -->
+  <div class="step-panel" id="panel-CK">
+    <div class="step-header">
+      <div class="step-badge CK">CK</div>
+      <div><div class="step-title">Check</div><div class="step-sub">Does your answer make sense?</div></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px;line-height:1.5" id="ck-prompt"></p>
+    <div class="check-btns">
+      <button class="check-btn yes-btn" id="btn-yes" onclick="checkStep(true)">☑️ Yes, it makes sense</button>
+      <button class="check-btn no-btn" id="btn-no" onclick="checkStep(false)">🤔 Not sure</button>
+    </div>
+    <div class="feedback-banner" id="ck-feedback"></div>
+  </div>
+
+  <!-- WORKED SOLUTION -->
+  <div class="step-panel" id="panel-WS">
+    <div class="step-header">
+      <div class="step-badge WS">★</div>
+      <div><div class="step-title">Worked Solution</div><div class="step-sub">Here's how to think through it</div></div>
+    </div>
+    <ul class="ws-steps" id="ws-steps"></ul>
+  </div>
+
+  <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="screen-results" class="screen">
+  <div class="trophy-big" id="r-trophy">🏆</div>
+  <h2 id="r-title">Well done!</h2>
+  <p class="result-msg" id="r-msg"></p>
+  <div class="score-circle">
+    <div class="score-num" id="r-score">0/15</div>
+    <div class="score-label">CORRECT</div>
+  </div>
+  <div class="breakdown-title">Topic breakdown</div>
+  <div id="rs-breakdown"></div>
+  <button class="btn-again" onclick="location.reload()">Play Again 🔄</button>
+</div>
 
 <script>
-// ─── EMAILJS ─────────────────────────────────────────────────────────────────
-const EJS_KEY="BMMGXE8I6OtVeMROI",EJS_SVC="service_wtgin0l",EJS_TPL="template_tb01514",P_EMAIL="vafgeo@gmail.com";
-emailjs.init(EJS_KEY);
-
-function sendReasoningEmail(player, score, total, byTopic) {
-  const pct = Math.round(score / total * 100);
-  const band = pct >= 80 ? 'Brilliant' : pct >= 60 ? 'Good' : pct >= 40 ? 'Developing' : 'Needs support';
-  const topicBreakdown = Object.entries(byTopic).map(([t,d]) => `  ${t}: ${d.correct}/${d.total}`).join('\n') || '  No topic data';
-  const body = `Year 5 Reasoning Trainer (RUCSAC)\n====================\nChild: ${player}\nScore: ${score}/${total} (${pct}%)\nBand: ${band}\n\nTopic breakdown:\n${topicBreakdown}\n====================\n${new Date().toLocaleString('en-GB')}`;
-  emailjs.send(EJS_SVC, EJS_TPL, {
-    to_email: P_EMAIL,
-    pupil_name: player,
-    score: score + ' out of ' + total,
-    band: band,
-    time_taken: pct + '%',
-    results_body: body,
-    date: new Date().toLocaleString('en-GB'),
-    test_name: 'Reasoning Trainer — RUCSAC',
-    subject: 'Year 5 Maths'
-  }).catch(e => console.error('EmailJS:', e));
-}
-
-// ─── PROBLEM BANK ────────────────────────────────────────────────────────────
-// Each problem has:
-// topic, text, understandOptions (array, correctIndex), operation (the main one),
-// working (array of hint strings shown in solve box),
-// answer (number), unit, acceptRange (±tolerance),
-// senseCheck (text shown in the check step),
-// solution (array of step strings for worked solution)
-
-const PROBLEMS = [
-  // ── NUMBER & PLACE VALUE ──
+// ─── QUESTION BANK (25 questions, 9 topics) ───────────────────────────────
+const BANK = [
   {
-    topic: "Place Value",
-    text: "A number has 4 thousands, 7 hundreds, 0 tens and 3 ones. What is the number?",
-    understandOptions: ["Find the sum of 4, 7, 0 and 3", "Write the number from its digits", "Round the number to the nearest hundred", "Multiply 4 by 7"],
-    correctUnderstand: 1,
-    operation: "+",
-    working: "Think of each digit in its place:\n• Thousands: 4 → 4,000\n• Hundreds: 7 → 700\n• Tens: 0 → 0\n• Ones: 3 → 3\n\nNow write them all together as one number.",
-    answer: 4703, unit: "", acceptRange: 0,
-    senseCheck: "Is 4,703 a four-digit number that starts with 4? ✓",
-    solution: [
-      { n:1, t:"Identify each digit: 4 thousands = <strong>4,000</strong>" },
-      { n:2, t:"7 hundreds = <strong>700</strong>" },
-      { n:3, t:"0 tens = <strong>0</strong>, 3 ones = <strong>3</strong>" },
-      { n:4, t:"Put them together: 4,000 + 700 + 0 + 3 = <strong>4,703</strong>" }
-    ]
-  },
-  // ── ADDITION & SUBTRACTION ──
-  {
-    topic: "Addition",
-    text: "A school library has 3,458 books. They receive a donation of 1,275 more books. How many books does the library have now?",
-    understandOptions: ["Find the difference between the two numbers", "Find the total number of books", "Find how many more books they need", "Divide the books equally"],
-    correctUnderstand: 1,
-    operation: "+",
-    working: "You need to add the two amounts together.\n\n    3,458\n  + 1,275\n  ───────\n\nStart with the ones: 8 + 5 = 13 (write 3, carry 1)\nTens: 5 + 7 + 1 = 13 (write 3, carry 1)\nHundreds: 4 + 2 + 1 = 7\nThousands: 3 + 1 = 4",
-    answer: 4733, unit: "books", acceptRange: 0,
-    senseCheck: "Around 3,500 + 1,300 = 4,800 — so 4,733 is in the right ballpark. ✓",
-    solution: [
-      { n:1, t:"We need to <strong>add</strong> 3,458 + 1,275" },
-      { n:2, t:"Ones: 8 + 5 = 13 → write 3, carry 1" },
-      { n:3, t:"Tens: 5 + 7 + 1 = 13 → write 3, carry 1" },
-      { n:4, t:"Hundreds: 4 + 2 + 1 = 7" },
-      { n:5, t:"Thousands: 3 + 1 = 4 → Answer: <strong>4,733 books</strong>" }
-    ]
+    topic: 'Addition',
+    q: 'A school library has 1,248 fiction books and 976 non-fiction books. How many books are there altogether?',
+    understand: ['Find the total number of books','Find the difference between the two types','Find how many more fiction books there are','Find the average number of books'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 0,
+    hint: '<strong>Line up the numbers:</strong><br>1,248 + 976<br>Start from the right: 8+6=14, write 4 carry 1<br>4+7+1=12, write 2 carry 1<br>2+9+1=12, write 2 carry 1<br>1+0+1=2',
+    answer: '2224', unit: 'books',
+    checkPrompt: 'You added two numbers around 1,000 and 1,000. Is 2,224 a reasonable total?',
+    solution: ['Identify: total = addition','1,248 + 976','Hundreds: 200 + 900 = 1,100','Tens: 40 + 70 = 110','Ones: 8 + 6 = 14','Total: 1,100 + 110 + 14 = 1,224... recheck column addition = 2,224','Answer: 2,224 books']
   },
   {
-    topic: "Subtraction",
-    text: "A cinema has 1,200 seats. 847 tickets have been sold. How many seats are still available?",
-    understandOptions: ["Find the total number of seats sold", "Find how many seats are left unsold", "Find how many more tickets were sold than seats", "Multiply the seats by the tickets"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "You need to find what's left, so subtract.\n\n    1,200\n  −   847\n  ───────\n\nYou'll need to exchange. Work carefully from the ones column.",
-    answer: 353, unit: "seats", acceptRange: 0,
-    senseCheck: "1,200 − 800 = 400, so 353 is close to that — makes sense. ✓",
-    solution: [
-      { n:1, t:"We need to <strong>subtract</strong>: 1,200 − 847" },
-      { n:2, t:"Exchange: 1,200 → 1,199 + regrouping" },
-      { n:3, t:"Ones: 10 − 7 = 3" },
-      { n:4, t:"Tens: 9 − 4 = 5 (after exchange)" },
-      { n:5, t:"Hundreds: 1 − 8 — need to exchange from thousands" },
-      { n:6, t:"Result: <strong>353 seats</strong> still available" }
-    ]
-  },
-  // ── MULTIPLICATION ──
-  {
-    topic: "Multiplication",
-    text: "A baker makes 24 trays of biscuits each day. Each tray holds 16 biscuits. How many biscuits does the baker make each day?",
-    understandOptions: ["Find the total number of biscuits", "Find how many trays are needed", "Find the difference between trays and biscuits", "Find how many days to make 16 biscuits"],
-    correctUnderstand: 0,
-    operation: "×",
-    working: "You need to multiply the number of trays by the number of biscuits per tray.\n\n    24 × 16\n\nBreak it down:\n• 24 × 10 = 240\n• 24 × 6  = 144\n• 240 + 144 = ?",
-    answer: 384, unit: "biscuits", acceptRange: 0,
-    senseCheck: "20 × 16 = 320, and we have 24 trays, so it should be a bit more. 384 ✓",
-    solution: [
-      { n:1, t:"We <strong>multiply</strong> trays × biscuits per tray" },
-      { n:2, t:"24 × 10 = <strong>240</strong>" },
-      { n:3, t:"24 × 6 = <strong>144</strong>" },
-      { n:4, t:"240 + 144 = <strong>384 biscuits</strong>" }
-    ]
+    topic: 'Subtraction',
+    q: 'A swimming pool holds 85,000 litres of water. After a hot week, 23,750 litres have evaporated. How much water is left?',
+    understand: ['Find the remaining amount of water','Find the total water added','Find the difference in temperature','Find how long evaporation takes'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>Column subtraction:</strong><br>85,000 − 23,750<br>Work right to left, borrowing where needed.',
+    answer: '61250', unit: 'litres',
+    checkPrompt: 'You took roughly 24,000 from 85,000. Is about 61,000 left a reasonable answer?',
+    solution: ['Identify: remaining = subtraction','85,000 − 23,750','85,000 − 20,000 = 65,000','65,000 − 3,750 = 61,250','Answer: 61,250 litres']
   },
   {
-    topic: "Multiplication",
-    text: "A minibus holds 14 passengers. There are 8 minibuses in a fleet. What is the total number of passengers all the minibuses can carry?",
-    understandOptions: ["Find the total passenger capacity", "Find the difference between minibuses", "Find how many trips are needed", "Find how many passengers are left over"],
-    correctUnderstand: 0,
-    operation: "×",
-    working: "Number of minibuses × passengers per minibus\n\n    8 × 14\n\n• 8 × 10 = 80\n• 8 × 4  = 32\n• 80 + 32 = ?",
-    answer: 112, unit: "passengers", acceptRange: 0,
-    senseCheck: "8 × 14 — about 8 × 15 = 120, so 112 is just below. Makes sense. ✓",
-    solution: [
-      { n:1, t:"<strong>Multiply</strong>: 8 minibuses × 14 passengers" },
-      { n:2, t:"8 × 10 = <strong>80</strong>" },
-      { n:3, t:"8 × 4 = <strong>32</strong>" },
-      { n:4, t:"80 + 32 = <strong>112 passengers</strong>" }
-    ]
-  },
-  // ── DIVISION ──
-  {
-    topic: "Division",
-    text: "245 children need to be put into teams of 7 for sports day. How many complete teams can be made?",
-    understandOptions: ["Find how many children are left over", "Find how many complete teams of 7 can be made", "Find the total number of children", "Find how many children are in each team"],
-    correctUnderstand: 1,
-    operation: "÷",
-    working: "Divide the total children by the team size.\n\n    245 ÷ 7\n\nYou can use the fact that 7 × 35 = 245\nOr work through: 7 × 30 = 210, remainder 35, then 35 ÷ 7 = 5",
-    answer: 35, unit: "teams", acceptRange: 0,
-    senseCheck: "35 teams × 7 = 245 — check! ✓",
-    solution: [
-      { n:1, t:"<strong>Divide</strong>: 245 ÷ 7" },
-      { n:2, t:"7 × 30 = 210, so 30 teams uses 210 children" },
-      { n:3, t:"245 − 210 = 35 remaining children" },
-      { n:4, t:"35 ÷ 7 = 5 more teams" },
-      { n:5, t:"30 + 5 = <strong>35 complete teams</strong>" }
-    ]
+    topic: 'Multiplication',
+    q: 'A bakery makes 48 loaves of bread every hour. How many loaves does it make in 7 hours?',
+    understand: ['Find the total loaves made','Find how long it takes to make one loaf','Find the difference between days','Find the average per day'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>48 × 7:</strong><br>40 × 7 = 280<br>8 × 7 = 56<br>280 + 56 = 336',
+    answer: '336', unit: 'loaves',
+    checkPrompt: '48 is close to 50. 50 × 7 = 350. Is 336 close to 350 and reasonable?',
+    solution: ['Total = rate × time → multiplication','48 × 7','= (40 × 7) + (8 × 7)','= 280 + 56','= 336 loaves']
   },
   {
-    topic: "Division",
-    text: "A rope is 156 cm long. It is cut into equal pieces of 12 cm each. How many pieces can be cut?",
-    understandOptions: ["Find how long the rope is", "Find how many 12 cm pieces fit into 156 cm", "Find the length of the leftover rope", "Find how many ropes make 156 cm"],
-    correctUnderstand: 1,
-    operation: "÷",
-    working: "Divide the total length by the piece length.\n\n    156 ÷ 12\n\n12 × 10 = 120\n156 − 120 = 36\n36 ÷ 12 = 3\nSo total = 10 + 3 = ?",
-    answer: 13, unit: "pieces", acceptRange: 0,
-    senseCheck: "13 × 12 = 156 — check! ✓",
-    solution: [
-      { n:1, t:"<strong>Divide</strong>: 156 ÷ 12" },
-      { n:2, t:"12 × 10 = 120" },
-      { n:3, t:"156 − 120 = 36 remaining" },
-      { n:4, t:"36 ÷ 12 = 3" },
-      { n:5, t:"10 + 3 = <strong>13 pieces</strong>" }
-    ]
-  },
-  // ── FRACTIONS ──
-  {
-    topic: "Fractions",
-    text: "A pizza is cut into 8 equal slices. Mia eats 3 slices and Tom eats 2 slices. What fraction of the pizza is left?",
-    understandOptions: ["Find the fraction of pizza eaten", "Find the fraction of pizza left over", "Find how many slices each person ate", "Find the total number of slices"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Find total slices eaten: 3 + 2 = 5\nStep 2: Slices left = 8 − 5 = 3\nStep 3: Write as a fraction: 3 out of 8 slices = 3/8",
-    answer: 3, unit: "/8 of the pizza", acceptRange: 0,
-    senseCheck: "3 + 2 + 3 = 8. All slices accounted for. ✓",
-    solution: [
-      { n:1, t:"Slices eaten: 3 + 2 = <strong>5</strong>" },
-      { n:2, t:"Slices left: 8 − 5 = <strong>3</strong>" },
-      { n:3, t:"Fraction remaining: <strong>3/8</strong> of the pizza" }
-    ]
+    topic: 'Division',
+    q: 'A farmer has 432 eggs. He packs them into boxes of 12. How many full boxes does he fill?',
+    understand: ['Find the number of full boxes','Find the total number of eggs','Find the difference in box sizes','Find how many eggs are left over'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>432 ÷ 12:</strong><br>12 × 30 = 360<br>432 − 360 = 72<br>12 × 6 = 72<br>So 30 + 6 = 36',
+    answer: '36', unit: 'boxes',
+    checkPrompt: 'Check: 36 × 12 = 432. Does 36 full boxes sound right for 432 eggs?',
+    solution: ['Total ÷ group size → division','432 ÷ 12','12 × 30 = 360','432 − 360 = 72','72 ÷ 12 = 6','36 + 6 = 36... total = 36 boxes']
   },
   {
-    topic: "Fractions",
-    text: "There are 30 children in a class. Two-fifths of them walk to school. How many children walk to school?",
-    understandOptions: ["Find how many children do NOT walk", "Find two-fifths of 30", "Find what fraction walks", "Find the total class size"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "To find a fraction of an amount:\nStep 1: Divide by the denominator (bottom): 30 ÷ 5 = 6\nStep 2: Multiply by the numerator (top): 6 × 2 = ?",
-    answer: 12, unit: "children", acceptRange: 0,
-    senseCheck: "One fifth of 30 is 6. Two fifths is double that = 12. ✓",
-    solution: [
-      { n:1, t:"Find 1/5 of 30: 30 ÷ 5 = <strong>6</strong>" },
-      { n:2, t:"Multiply by 2: 6 × 2 = <strong>12</strong>" },
-      { n:3, t:"<strong>12 children</strong> walk to school" }
-    ]
-  },
-  // ── DECIMALS ──
-  {
-    topic: "Decimals",
-    text: "A bottle holds 1.75 litres of water. Sophie drinks 0.6 litres. How much water is left in the bottle?",
-    understandOptions: ["Find how much water Sophie drank", "Find how much water is left", "Find the total water in two bottles", "Find how many bottles she needs"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Subtract the amount drunk from the full amount.\n\n    1.75\n  − 0.60\n  ──────\n\nMake sure the decimal points are lined up!",
-    answer: 1.15, unit: "litres", acceptRange: 0.01,
-    senseCheck: "1.75 − 0.6: roughly 1.75 − 0.6 = 1.15. ✓",
-    solution: [
-      { n:1, t:"Line up decimal points: 1.75 − 0.60" },
-      { n:2, t:"Hundredths: 5 − 0 = 5" },
-      { n:3, t:"Tenths: 7 − 6 = 1" },
-      { n:4, t:"Ones: 1 − 0 = 1" },
-      { n:5, t:"Answer: <strong>1.15 litres</strong>" }
-    ]
+    topic: 'Decimals',
+    q: 'Sofia had 1.75 litres of orange juice. She drank 0.6 litres. How much orange juice is left?',
+    understand: ['Find how much juice is left','Find the total juice bought','Find how many glasses she drank','Find the cost per litre'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>Line up decimal points:</strong><br>1.75 − 0.60<br>Hundredths: 5−0=5<br>Tenths: 7−6=1<br>Ones: 1−0=1',
+    answer: '1.15', unit: 'litres',
+    checkPrompt: '1.75 − 0.6: roughly 1.75 − 0.6 = 1.15 ✓',
+    solution: ['Remaining = subtraction','1.75 − 0.60','Line up decimal points','Hundredths: 5−0=5','Tenths: 7−6=1','Ones: 1−0=1','Answer: 1.15 litres']
   },
   {
-    topic: "Decimals",
-    text: "A packet of nuts costs £1.35. Jack buys 4 packets. How much does he spend altogether?",
-    understandOptions: ["Find the cost of one extra packet", "Find the total cost of 4 packets", "Find how many packets he can afford", "Find the change from £10"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "Multiply the cost by the number of packets.\n\n    £1.35 × 4\n\n• £1 × 4 = £4.00\n• 35p × 4 = 140p = £1.40\n• £4.00 + £1.40 = ?",
-    answer: 5.40, unit: "£", acceptRange: 0.01,
-    senseCheck: "About £1.35 × 4 ≈ £5.40. Reasonable for 4 snack packs. ✓",
-    solution: [
-      { n:1, t:"<strong>Multiply</strong>: £1.35 × 4" },
-      { n:2, t:"£1.00 × 4 = <strong>£4.00</strong>" },
-      { n:3, t:"£0.35 × 4 = <strong>£1.40</strong>" },
-      { n:4, t:"£4.00 + £1.40 = <strong>£5.40</strong>" }
-    ]
-  },
-  // ── MEASUREMENT ──
-  {
-    topic: "Measurement",
-    text: "A plank of wood is 3.6 metres long. A carpenter cuts off a piece 85 centimetres long. How many centimetres of wood are left?",
-    understandOptions: ["Find the length of the piece cut off", "Find the length of wood remaining in centimetres", "Convert metres to millimetres", "Find the total length of two planks"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "First convert everything to the same unit (cm).\n\n3.6 metres = 360 cm\n\nNow subtract: 360 − 85 = ?",
-    answer: 275, unit: "cm", acceptRange: 0,
-    senseCheck: "360 − 85: roughly 360 − 90 = 270, so 275 is close. ✓",
-    solution: [
-      { n:1, t:"Convert: 3.6 m = <strong>360 cm</strong>" },
-      { n:2, t:"Subtract: 360 − 85" },
-      { n:3, t:"360 − 80 = 280, then 280 − 5 = <strong>275 cm</strong>" }
-    ]
+    topic: 'Fractions',
+    q: 'A pizza is cut into 8 equal slices. Tom eats 3 slices and his sister eats 2 slices. What fraction of the pizza is left?',
+    understand: ['Find the fraction of pizza remaining','Find the total number of slices eaten','Find who ate more pizza','Find the cost per slice'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>Total eaten:</strong> 3 + 2 = 5 slices<br><strong>Left:</strong> 8 − 5 = 3 slices<br><strong>Fraction left:</strong> 3/8',
+    answer: '3/8', unit: '',
+    checkPrompt: '5 slices were eaten out of 8. Is 3/8 remaining a sensible answer?',
+    solution: ['Slices eaten: 3 + 2 = 5','Slices left: 8 − 5 = 3','Fraction left: 3 out of 8 = 3/8','Answer: 3/8']
   },
   {
-    topic: "Measurement",
-    text: "A jug contains 2.4 litres of juice. It is poured equally into 6 glasses. How many millilitres are in each glass?",
-    understandOptions: ["Find the total amount of juice", "Find how many ml each glass receives", "Find how many glasses are needed for 1 litre", "Find how many jugs are needed"],
-    correctUnderstand: 1,
-    operation: "÷",
-    working: "Step 1: Convert litres to millilitres: 2.4 litres = 2,400 ml\nStep 2: Divide equally: 2,400 ÷ 6 = ?",
-    answer: 400, unit: "ml", acceptRange: 0,
-    senseCheck: "400 × 6 = 2,400 ml = 2.4 litres. ✓",
-    solution: [
-      { n:1, t:"Convert: 2.4 litres = <strong>2,400 ml</strong>" },
-      { n:2, t:"Divide equally: 2,400 ÷ 6 = <strong>400 ml</strong> per glass" }
-    ]
-  },
-  // ── PERIMETER & AREA ──
-  {
-    topic: "Area & Perimeter",
-    text: "A rectangular garden is 12 metres long and 7 metres wide. What is the perimeter of the garden?",
-    understandOptions: ["Find the area of the garden", "Find the total distance around the garden", "Find the length of one side", "Find how many plants fit in the garden"],
-    correctUnderstand: 1,
-    operation: "+",
-    working: "Perimeter = distance all the way around.\n\nFor a rectangle:\nP = 2 × (length + width)\nP = 2 × (12 + 7)\nP = 2 × 19 = ?",
-    answer: 38, unit: "metres", acceptRange: 0,
-    senseCheck: "Two long sides = 24 m, two short sides = 14 m. 24 + 14 = 38. ✓",
-    solution: [
-      { n:1, t:"Perimeter formula: 2 × (l + w)" },
-      { n:2, t:"12 + 7 = <strong>19</strong>" },
-      { n:3, t:"2 × 19 = <strong>38 metres</strong>" }
-    ]
+    topic: 'Measurement',
+    q: 'A piece of rope is 7.5 metres long. It is cut into 5 equal pieces. How long is each piece?',
+    understand: ['Find the length of each piece','Find the total length of all pieces','Find how many cuts were made','Find the weight of the rope'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>7.5 ÷ 5:</strong><br>7 ÷ 5 = 1.4<br>0.5 ÷ 5 = 0.1<br>1.4 + 0.1 = 1.5',
+    answer: '1.5', unit: 'metres',
+    checkPrompt: 'Check: 1.5 × 5 = 7.5 ✓ Does 1.5m per piece sound right?',
+    solution: ['Equal pieces → division','7.5 ÷ 5','= 1.5 metres per piece','Check: 1.5 × 5 = 7.5 ✓']
   },
   {
-    topic: "Area & Perimeter",
-    text: "A classroom floor measures 9 metres by 6 metres. What is the area of the floor?",
-    understandOptions: ["Find the distance around the classroom", "Find how much floor space there is", "Find the length of the longest side", "Find the number of tiles needed"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "Area of a rectangle = length × width\n\nArea = 9 × 6 = ?",
-    answer: 54, unit: "m²", acceptRange: 0,
-    senseCheck: "9 × 6 = 54. And 54 m² is a reasonable classroom size. ✓",
-    solution: [
-      { n:1, t:"Area = length × width" },
-      { n:2, t:"9 × 6 = <strong>54 m²</strong>" }
-    ]
-  },
-  // ── TIME ──
-  {
-    topic: "Time",
-    text: "A film starts at 14:35 and lasts 1 hour and 48 minutes. What time does the film end?",
-    understandOptions: ["Find how long the film lasts", "Find the end time of the film", "Find what time the film started", "Find how many films fit in an evening"],
-    correctUnderstand: 1,
-    operation: "+",
-    working: "Add the duration to the start time.\n\nStart: 14:35\nAdd 1 hour → 15:35\nAdd 48 minutes: 35 + 48 = 83 minutes\n83 minutes = 1 hour 23 minutes\nSo add another hour: 16:23",
-    answer: 1623, unit: "(24hr time, type 1623)", acceptRange: 0,
-    senseCheck: "About 2.5 hours after 2:30 pm would be around 5pm — 16:23 fits. ✓",
-    solution: [
-      { n:1, t:"Start: <strong>14:35</strong>" },
-      { n:2, t:"Add 1 hour → <strong>15:35</strong>" },
-      { n:3, t:"Add 48 minutes: 35 + 48 = 83 min = 1h 23min" },
-      { n:4, t:"15:35 + 1h 23min = <strong>16:23</strong>" }
-    ]
-  },
-  // ── MONEY ──
-  {
-    topic: "Money",
-    text: "Jake has £20. He buys a book for £6.75 and a pen for £1.35. How much money does he have left?",
-    understandOptions: ["Find how much Jake spent in total", "Find how much money Jake has left", "Find the price difference between the book and pen", "Find how many pens Jake could buy"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Add the two costs together: £6.75 + £1.35 = ?\nStep 2: Subtract the total from £20.00",
-    answer: 11.90, unit: "£", acceptRange: 0.01,
-    senseCheck: "Spent about £8, so roughly £12 left. £11.90 fits. ✓",
-    solution: [
-      { n:1, t:"Total spent: £6.75 + £1.35 = <strong>£8.10</strong>" },
-      { n:2, t:"Change: £20.00 − £8.10 = <strong>£11.90</strong>" }
-    ]
+    topic: 'Area & Perimeter',
+    q: 'A rectangular garden is 12 metres long and 8 metres wide. What is the perimeter of the garden?',
+    understand: ['Find the total distance around the garden','Find the area of the garden','Find the number of plants needed','Find the diagonal of the garden'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 0,
+    hint: '<strong>Perimeter = 2 × (length + width)</strong><br>= 2 × (12 + 8)<br>= 2 × 20<br>= 40',
+    answer: '40', unit: 'metres',
+    checkPrompt: 'Perimeter is all 4 sides: 12+8+12+8 = 40. Does that match?',
+    solution: ['Perimeter = total distance around shape','= 2 × (length + width)','= 2 × (12 + 8)','= 2 × 20','= 40 metres']
   },
   {
-    topic: "Money",
-    text: "A shop sells apples for 35p each. Mrs Chen buys 12 apples. She pays with a £5 note. How much change does she receive?",
-    understandOptions: ["Find the cost of one apple", "Find the change Mrs Chen receives", "Find how many apples cost £5", "Find the cost of 12 apples"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Find the total cost: 35p × 12 = ?\nStep 2: Convert to pounds\nStep 3: Subtract from £5.00",
-    answer: 0.80, unit: "£", acceptRange: 0.01,
-    senseCheck: "35p × 12 = 420p = £4.20. Change from £5 = 80p = £0.80 ✓",
-    solution: [
-      { n:1, t:"Cost: 35p × 12 = <strong>420p = £4.20</strong>" },
-      { n:2, t:"Change: £5.00 − £4.20 = <strong>£0.80</strong>" }
-    ]
-  },
-  // ── RATIO & PROPORTION ──
-  {
-    topic: "Ratio",
-    text: "To make pink paint, you mix 3 parts red to 1 part white. How much red paint do you need to make 20 litres of pink paint?",
-    understandOptions: ["Find the amount of white paint", "Find the amount of red paint needed", "Find the total ratio parts", "Find the colour of the paint"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "Total parts = 3 red + 1 white = 4 parts\n\nEach part = 20 ÷ 4 = 5 litres\n\nRed paint = 3 parts × 5 litres = ?",
-    answer: 15, unit: "litres", acceptRange: 0,
-    senseCheck: "15 red + 5 white = 20 litres total. ✓",
-    solution: [
-      { n:1, t:"Total parts: 3 + 1 = <strong>4 parts</strong>" },
-      { n:2, t:"Each part: 20 ÷ 4 = <strong>5 litres</strong>" },
-      { n:3, t:"Red paint: 3 × 5 = <strong>15 litres</strong>" }
-    ]
-  },
-  // ── MULTI-STEP ──
-  {
-    topic: "Multi-step",
-    text: "There are 6 boxes of eggs. Each box contains 12 eggs. A chef uses 15 eggs to make omelettes and 27 eggs to make cakes. How many eggs are left?",
-    understandOptions: ["Find the total number of eggs used", "Find how many eggs are left after cooking", "Find the number of omelettes made", "Find how many boxes are needed"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Total eggs = 6 × 12 = 72\nStep 2: Total used = 15 + 27 = 42\nStep 3: Eggs left = 72 − 42 = ?",
-    answer: 30, unit: "eggs", acceptRange: 0,
-    senseCheck: "72 eggs, used 42, left with 30. 42 + 30 = 72 ✓",
-    solution: [
-      { n:1, t:"Total eggs: 6 × 12 = <strong>72</strong>" },
-      { n:2, t:"Used: 15 + 27 = <strong>42</strong>" },
-      { n:3, t:"Left: 72 − 42 = <strong>30 eggs</strong>" }
-    ]
+    topic: 'Area & Perimeter',
+    q: 'A classroom floor is 9 metres long and 7 metres wide. What is the area of the floor?',
+    understand: ['Find the total space covered by the floor','Find the distance around the room','Find the height of the room','Find how many tiles fit in one row'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>Area = length × width</strong><br>= 9 × 7<br>= 63',
+    answer: '63', unit: 'm²',
+    checkPrompt: 'Area = length × width. 9 × 7 = 63. Does 63 square metres sound right for a classroom?',
+    solution: ['Area = length × width','= 9 × 7','= 63 m²']
   },
   {
-    topic: "Multi-step",
-    text: "A school trip costs £14.50 per child. There are 28 children going. The school has already collected £210. How much more money is still needed?",
-    understandOptions: ["Find the total cost of the trip", "Find how much more money is needed", "Find how many children have paid", "Find the cost per child"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Total cost = £14.50 × 28\nBreak it down: £14 × 28 = £392, £0.50 × 28 = £14\nTotal = £392 + £14 = £406\n\nStep 2: Still needed = £406 − £210 = ?",
-    answer: 196, unit: "£", acceptRange: 0,
-    senseCheck: "£406 total, £210 collected, £196 still needed. 210 + 196 = 406 ✓",
-    solution: [
-      { n:1, t:"Total cost: £14.50 × 28" },
-      { n:2, t:"£14 × 28 = <strong>£392</strong>" },
-      { n:3, t:"£0.50 × 28 = <strong>£14</strong>" },
-      { n:4, t:"Total = £392 + £14 = <strong>£406</strong>" },
-      { n:5, t:"Still needed: £406 − £210 = <strong>£196</strong>" }
-    ]
+    topic: 'Money',
+    q: 'Liam buys 3 books at £4.75 each and pays with a £20 note. How much change does he receive?',
+    understand: ['Find the change Liam receives','Find the price of one book','Find the total cost of all books','Find how many books £20 can buy'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>Step 1 — Total cost:</strong> 3 × £4.75 = £14.25<br><strong>Step 2 — Change:</strong> £20.00 − £14.25 = £5.75',
+    answer: '5.75', unit: '£',
+    checkPrompt: '3 books at ~£5 each ≈ £15. Change from £20 ≈ £5. Is £5.75 reasonable?',
+    solution: ['Two steps: multiply then subtract','3 × £4.75 = £14.25','£20.00 − £14.25','= £5.75 change']
   },
   {
-    topic: "Multi-step",
-    text: "A farmer has 5 fields. Each field produces 840 kg of wheat. He sells the wheat in 8 kg bags. How many bags can he fill?",
-    understandOptions: ["Find the total weight of wheat", "Find the number of 8 kg bags he can fill", "Find the weight of one field's wheat", "Find how many fields he needs"],
-    correctUnderstand: 1,
-    operation: "÷",
-    working: "Step 1: Total wheat = 5 × 840 = 4,200 kg\nStep 2: Number of bags = 4,200 ÷ 8\n\n4,200 ÷ 8: Think 4,000 ÷ 8 = 500, 200 ÷ 8 = 25\n500 + 25 = ?",
-    answer: 525, unit: "bags", acceptRange: 0,
-    senseCheck: "525 × 8 = 4,200 kg ✓",
-    solution: [
-      { n:1, t:"Total wheat: 5 × 840 = <strong>4,200 kg</strong>" },
-      { n:2, t:"4,000 ÷ 8 = <strong>500</strong>" },
-      { n:3, t:"200 ÷ 8 = <strong>25</strong>" },
-      { n:4, t:"Total bags: 500 + 25 = <strong>525 bags</strong>" }
-    ]
+    topic: 'Money',
+    q: 'A cinema ticket costs £8.50 for an adult and £5.25 for a child. How much does it cost for 2 adults and 3 children?',
+    understand: ['Find the total cost for the group','Find the cost difference between adult and child','Find the cheapest option','Find the cost for one adult and one child'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>Adults:</strong> 2 × £8.50 = £17.00<br><strong>Children:</strong> 3 × £5.25 = £15.75<br><strong>Total:</strong> £17.00 + £15.75 = £32.75',
+    answer: '32.75', unit: '£',
+    checkPrompt: '2 adults ≈ £17, 3 children ≈ £16 → total ≈ £33. Is £32.75 reasonable?',
+    solution: ['2 × £8.50 = £17.00','3 × £5.25 = £15.75','£17.00 + £15.75 = £32.75']
   },
   {
-    topic: "Multi-step",
-    text: "A swimming pool holds 45,000 litres when full. It is currently 3/5 full. A pump adds 800 litres per hour. How many litres are in the pool after 3 hours of pumping?",
-    understandOptions: ["Find how many hours to fill the pool", "Find the total litres after 3 hours of pumping", "Find the fraction of the pool that is empty", "Find the speed of the pump"],
-    correctUnderstand: 1,
-    operation: "+",
-    working: "Step 1: Current water = 3/5 of 45,000\n= 45,000 ÷ 5 × 3 = 9,000 × 3 = 27,000 litres\n\nStep 2: Added by pump = 800 × 3 = 2,400 litres\n\nStep 3: Total = 27,000 + 2,400 = ?",
-    answer: 29400, unit: "litres", acceptRange: 0,
-    senseCheck: "27,000 + 2,400 = 29,400. Still below 45,000 capacity. ✓",
-    solution: [
-      { n:1, t:"3/5 of 45,000: 45,000 ÷ 5 = 9,000 × 3 = <strong>27,000 litres</strong>" },
-      { n:2, t:"Pump adds: 800 × 3 = <strong>2,400 litres</strong>" },
-      { n:3, t:"Total: 27,000 + 2,400 = <strong>29,400 litres</strong>" }
-    ]
-  },
-  // ── STATISTICS ──
-  {
-    topic: "Statistics",
-    text: "Five children scored the following marks in a test: 14, 18, 12, 20, 16. What is the mean (average) score?",
-    understandOptions: ["Find the highest score", "Find the mean average of the scores", "Find the difference between highest and lowest", "Find who scored above 15"],
-    correctUnderstand: 1,
-    operation: "÷",
-    working: "Mean = total of all scores ÷ number of scores\n\nStep 1: Add all scores: 14 + 18 + 12 + 20 + 16 = ?\nStep 2: Divide by 5",
-    answer: 16, unit: "marks", acceptRange: 0,
-    senseCheck: "If all five scored 16, total would be 80. 80 ÷ 5 = 16. ✓",
-    solution: [
-      { n:1, t:"Sum: 14 + 18 + 12 + 20 + 16 = <strong>80</strong>" },
-      { n:2, t:"Mean: 80 ÷ 5 = <strong>16 marks</strong>" }
-    ]
-  },
-  // Extra problems to reach 15 when shuffled
-  {
-    topic: "Multiplication",
-    text: "A box of crayons has 36 crayons. A school orders 25 boxes. How many crayons does the school receive in total?",
-    understandOptions: ["Find the number of boxes needed", "Find the total crayons received", "Find how many crayons are left over", "Find the cost of one box"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "Multiply: 36 × 25\n\n• 36 × 20 = 720\n• 36 × 5  = 180\n• 720 + 180 = ?",
-    answer: 900, unit: "crayons", acceptRange: 0,
-    senseCheck: "About 40 × 25 = 1,000, so 900 is a bit less. Makes sense. ✓",
-    solution: [
-      { n:1, t:"36 × 20 = <strong>720</strong>" },
-      { n:2, t:"36 × 5 = <strong>180</strong>" },
-      { n:3, t:"720 + 180 = <strong>900 crayons</strong>" }
-    ]
+    topic: 'Time',
+    q: 'A train leaves at 09:45 and arrives at 13:20. How long is the journey?',
+    understand: ['Find the duration of the journey','Find what time the train departs','Find how many stops the train makes','Find the speed of the train'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>09:45 → 10:00</strong> = 15 minutes<br><strong>10:00 → 13:00</strong> = 3 hours<br><strong>13:00 → 13:20</strong> = 20 minutes<br>Total: 3 hours 35 minutes',
+    answer: '3h35', unit: '',
+    checkPrompt: 'From about 9:45 to 1:20pm — is roughly 3.5 hours a sensible journey time?',
+    solution: ['Duration = end − start','09:45 → 10:00 = 15 mins','10:00 → 13:00 = 3 hours','13:00 → 13:20 = 20 mins','Total: 3 hours 35 mins']
   },
   {
-    topic: "Fractions",
-    text: "A bag of sweets has 48 sweets. Sam eats one quarter of them and gives one third to his friend. How many sweets are left?",
-    understandOptions: ["Find how many sweets Sam ate", "Find how many sweets are left in the bag", "Find how many sweets Sam's friend received", "Find the fraction Sam kept"],
-    correctUnderstand: 1,
-    operation: "-",
-    working: "Step 1: Sam eats 1/4 of 48 = 48 ÷ 4 = 12\nStep 2: Gives 1/3 of 48 = 48 ÷ 3 = 16\nStep 3: Left = 48 − 12 − 16 = ?",
-    answer: 20, unit: "sweets", acceptRange: 0,
-    senseCheck: "12 + 16 + 20 = 48. All sweets accounted for. ✓",
-    solution: [
-      { n:1, t:"1/4 of 48: 48 ÷ 4 = <strong>12</strong> eaten" },
-      { n:2, t:"1/3 of 48: 48 ÷ 3 = <strong>16</strong> given away" },
-      { n:3, t:"Left: 48 − 12 − 16 = <strong>20 sweets</strong>" }
-    ]
+    topic: 'Time',
+    q: 'A film starts at 14:35 and lasts 1 hour 48 minutes. What time does it end?',
+    understand: ['Find the end time of the film','Find the length of the film','Find the start time of the film','Find how long until midnight'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 0,
+    hint: '<strong>14:35 + 1 hour</strong> = 15:35<br><strong>15:35 + 48 minutes</strong>:<br>15:35 + 25 = 16:00, then + 23 = 16:23',
+    answer: '16:23', unit: '',
+    checkPrompt: 'Starting at 2:35pm, add nearly 2 hours — ending around 4:23pm. Does that make sense?',
+    solution: ['End time = start + duration','14:35 + 1 hour = 15:35','15:35 + 48 mins','= 15:35 + 25 = 16:00','16:00 + 23 = 16:23','Answer: 16:23']
   },
   {
-    topic: "Area & Perimeter",
-    text: "A square has a perimeter of 52 cm. What is its area?",
-    understandOptions: ["Find one side length only", "Find the area of the square", "Find the diagonal of the square", "Find the perimeter in mm"],
-    correctUnderstand: 1,
-    operation: "×",
-    working: "Step 1: A square has 4 equal sides.\nSide = 52 ÷ 4 = 13 cm\n\nStep 2: Area = side × side = 13 × 13 = ?",
-    answer: 169, unit: "cm²", acceptRange: 0,
-    senseCheck: "13 × 13 = 169. And 4 × 13 = 52 cm perimeter. ✓",
-    solution: [
-      { n:1, t:"Side: 52 ÷ 4 = <strong>13 cm</strong>" },
-      { n:2, t:"Area: 13 × 13 = <strong>169 cm²</strong>" }
-    ]
+    topic: 'Statistics',
+    q: 'Five children scored: 12, 15, 9, 18, 11 in a spelling test. What is the mean score?',
+    understand: ['Find the average (mean) score','Find the highest score','Find the range of scores','Find who scored most'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>Step 1 — Add all scores:</strong><br>12+15+9+18+11 = 65<br><strong>Step 2 — Divide by how many:</strong><br>65 ÷ 5 = 13',
+    answer: '13', unit: '',
+    checkPrompt: 'All scores are between 9 and 18. Is 13 in that range and plausible as an average?',
+    solution: ['Mean = total ÷ count','12+15+9+18+11 = 65','65 ÷ 5 = 13','Answer: 13']
+  },
+  {
+    topic: 'Statistics',
+    q: 'The temperatures for a week were: 14°, 16°, 13°, 18°, 15°, 17°, 12°. What is the range?',
+    understand: ['Find the range (highest minus lowest)','Find the mean temperature','Find the total of all temperatures','Find the middle temperature'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>Range = highest − lowest</strong><br>Highest: 18°<br>Lowest: 12°<br>18 − 12 = 6',
+    answer: '6', unit: '°C',
+    checkPrompt: 'Range is the spread from lowest to highest. 18−12=6. Is that right?',
+    solution: ['Range = max − min','Max = 18, Min = 12','18 − 12 = 6','Answer: 6°C']
+  },
+  {
+    topic: 'Multi-step',
+    q: 'A shop sells apples in bags of 6 for £1.80 and in bags of 4 for £1.40. Which bag gives better value for money?',
+    understand: ['Find the cost per apple in each bag','Find the total number of apples','Find the cheapest bag to buy','Find how many bags you need to buy'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>Bag of 6:</strong> £1.80 ÷ 6 = 30p per apple<br><strong>Bag of 4:</strong> £1.40 ÷ 4 = 35p per apple<br>Bag of 6 is cheaper per apple.',
+    answer: '6', unit: 'bag',
+    checkPrompt: '30p vs 35p per apple — is the bag of 6 clearly better value?',
+    solution: ['Compare cost per apple','Bag of 6: 180p ÷ 6 = 30p each','Bag of 4: 140p ÷ 4 = 35p each','30p < 35p → bag of 6 is better value']
+  },
+  {
+    topic: 'Multi-step',
+    q: 'There are 28 children in a class. Each child needs 3 pencils and 2 rubbers. Pencils cost 15p each and rubbers cost 25p each. What is the total cost in pounds?',
+    understand: ['Find the total cost for all children','Find how many pencils are needed','Find the cost of one complete set','Find how many rubbers are left over'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>Pencils:</strong> 28 × 3 = 84 pencils → 84 × 15p = £12.60<br><strong>Rubbers:</strong> 28 × 2 = 56 rubbers → 56 × 25p = £14.00<br><strong>Total:</strong> £12.60 + £14.00 = £26.60',
+    answer: '26.60', unit: '£',
+    checkPrompt: 'Roughly 30 children × (3×15p + 2×25p) = 30 × 95p ≈ £28.50. Is £26.60 in that ballpark?',
+    solution: ['Pencils: 28×3=84, 84×15p=1260p=£12.60','Rubbers: 28×2=56, 56×25p=1400p=£14.00','Total: £12.60+£14.00=£26.60']
+  },
+  {
+    topic: 'Fractions',
+    q: 'There are 240 children in a school. Three-quarters of them walk to school. How many children walk to school?',
+    understand: ['Find the number of children who walk','Find the number who do not walk','Find the fraction who cycle','Find how many walk more than 1 mile'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>3/4 of 240:</strong><br>240 ÷ 4 = 60 (one quarter)<br>60 × 3 = 180 (three quarters)',
+    answer: '180', unit: 'children',
+    checkPrompt: 'Three-quarters of 240: half = 120, three-quarters = 180. Does that sound right?',
+    solution: ['Fraction of total → multiply','3/4 × 240','= (240 ÷ 4) × 3','= 60 × 3','= 180 children']
+  },
+  {
+    topic: 'Division',
+    q: 'A school trip needs 195 children to be split equally into minibuses. Each minibus holds 15 children. How many minibuses are needed?',
+    understand: ['Find how many minibuses are needed','Find how many children are left over','Find the total number of children','Find how long the journey takes'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>195 ÷ 15:</strong><br>15 × 10 = 150<br>195 − 150 = 45<br>15 × 3 = 45<br>10 + 3 = 13',
+    answer: '13', unit: 'minibuses',
+    checkPrompt: 'Check: 13 × 15 = 195 ✓ Is 13 minibuses for 195 children reasonable?',
+    solution: ['195 ÷ 15','15 × 10 = 150','195 − 150 = 45','45 ÷ 15 = 3','Total: 13 minibuses']
+  },
+  {
+    topic: 'Multiplication',
+    q: 'A football stadium has 36 rows of seats. Each row has 125 seats. How many seats are there altogether?',
+    understand: ['Find the total number of seats','Find the number of rows','Find the number of empty seats','Find the average seats per section'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>36 × 125:</strong><br>36 × 100 = 3,600<br>36 × 25 = 900<br>3,600 + 900 = 4,500',
+    answer: '4500', unit: 'seats',
+    checkPrompt: '36 × 125: about 40 × 125 = 5,000. Is 4,500 a reasonable answer?',
+    solution: ['Total = rows × seats per row','36 × 125','= 36 × 100 + 36 × 25','= 3,600 + 900','= 4,500 seats']
+  },
+  {
+    topic: 'Measurement',
+    q: 'A jug contains 2.4 litres of water. Emma pours 850 ml into a glass. How many millilitres are left in the jug?',
+    understand: ['Find how many ml are left in the jug','Find the total water poured','Find the weight of the water','Find the cost per litre'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 1,
+    hint: '<strong>Convert first:</strong> 2.4 litres = 2,400 ml<br><strong>Subtract:</strong> 2,400 − 850 = 1,550 ml',
+    answer: '1550', unit: 'ml',
+    checkPrompt: 'You started with 2,400ml and poured 850ml. Is 1,550ml remaining sensible?',
+    solution: ['Convert: 2.4 litres = 2,400 ml','2,400 − 850 = 1,550 ml','Answer: 1,550 ml']
+  },
+  {
+    topic: 'Multi-step',
+    q: 'A car park has 5 levels. Each level has 12 rows with 18 spaces in each row. How many parking spaces are there in total?',
+    understand: ['Find the total number of parking spaces','Find the spaces on one level','Find how many cars parked today','Find the number of empty spaces'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>Spaces per level:</strong> 12 × 18 = 216<br><strong>Total:</strong> 216 × 5 = 1,080',
+    answer: '1080', unit: 'spaces',
+    checkPrompt: 'About 200 per floor × 5 = 1,000. Is 1,080 reasonable?',
+    solution: ['Spaces per row: 18','Spaces per level: 12 × 18 = 216','Total: 216 × 5 = 1,080 spaces']
+  },
+  {
+    topic: 'Addition',
+    q: 'In a charity run, Alex raised £34.75, Beth raised £28.50, and Charlie raised £41.25. How much did they raise altogether?',
+    understand: ['Find the total amount raised','Find who raised the most','Find the difference between the highest and lowest','Find the average amount raised'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 0,
+    hint: '<strong>34.75 + 28.50 + 41.25:</strong><br>34.75 + 28.50 = 63.25<br>63.25 + 41.25 = 104.50',
+    answer: '104.50', unit: '£',
+    checkPrompt: 'Three amounts roughly £35 + £29 + £41 ≈ £105. Is £104.50 close to that?',
+    solution: ['Total = sum of all three','£34.75 + £28.50 = £63.25','£63.25 + £41.25 = £104.50']
+  },
+  {
+    topic: 'Fractions',
+    q: 'A bag of mixed sweets weighs 500g. Two-fifths of the sweets are chocolate. How many grams of chocolate sweets are there?',
+    understand: ['Find the weight of chocolate sweets','Find the weight of non-chocolate sweets','Find the total weight of the bag','Find the number of sweets in the bag'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 2,
+    hint: '<strong>2/5 of 500g:</strong><br>500 ÷ 5 = 100 (one fifth)<br>100 × 2 = 200 (two fifths)',
+    answer: '200', unit: 'g',
+    checkPrompt: 'Two-fifths of 500: one-fifth = 100g, so two-fifths = 200g. Correct?',
+    solution: ['2/5 × 500','= (500 ÷ 5) × 2','= 100 × 2','= 200g of chocolate sweets']
+  },
+  {
+    topic: 'Statistics',
+    q: 'Class A scored a mean of 72% in a test with 25 pupils. Class B scored a mean of 68% with 20 pupils. What is the combined mean percentage of all pupils?',
+    understand: ['Find the combined mean of both classes','Find the highest scoring class','Find the difference in means','Find the range of all scores'],
+    correctU: 0,
+    ops: ['+','-','×','÷'], correctC: 3,
+    hint: '<strong>Class A total:</strong> 72 × 25 = 1,800<br><strong>Class B total:</strong> 68 × 20 = 1,360<br><strong>Combined:</strong> (1,800 + 1,360) ÷ (25 + 20) = 3,160 ÷ 45 ≈ 70.2',
+    answer: '70.2', unit: '%',
+    checkPrompt: 'Both classes scored in the 68–72% range. Is a combined mean of about 70% sensible?',
+    solution: ['Class A total: 72 × 25 = 1,800','Class B total: 68 × 20 = 1,360','Combined total: 3,160','Total pupils: 45','Mean: 3,160 ÷ 45 ≈ 70.2%']
   }
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
+// ─── GLOBALS ──────────────────────────────────────────────────────────────
+const SESSION_SIZE = 15;
 let G = {
-  player: '', emoji: '',
-  queue: [], current: 0, score: 0,
-  stepsDone: { U: false, C: false, S: false, A: false, C2: false },
-  answered: false,
-  byTopic: {}  // topic → { correct, total }
+  player: '',
+  questions: [],
+  idx: 0,
+  score: 0,
+  byTopic: {},
+  currentStep: 'R',
+  answerCorrect: false
 };
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
 
 function shuffle(arr) {
   const a = [...arr];
@@ -1145,253 +940,284 @@ function shuffle(arr) {
   return a;
 }
 
-function showScreen(name) {
-  ['rucsac','player','game','results'].forEach(s => {
-    document.getElementById('screen-' + s).classList.add('hidden');
+// ─── WELCOME ──────────────────────────────────────────────────────────────
+function selectPlayer(name, el) {
+  G.player = name;
+  document.querySelectorAll('.player-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btn-start').classList.add('ready');
+}
+
+function startQuiz() {
+  if (!G.player) return;
+  G.questions = shuffle(BANK).slice(0, SESSION_SIZE);
+  G.idx = 0; G.score = 0; G.byTopic = {};
+  G.questions.forEach(q => {
+    if (!G.byTopic[q.topic]) G.byTopic[q.topic] = { correct: 0, total: 0 };
+    G.byTopic[q.topic].total++;
   });
-  document.getElementById('screen-' + name).classList.remove('hidden');
+  showScreen('quiz');
+  loadQuestion();
 }
 
-function selectPlayer(name, emoji) {
-  G.player = name; G.emoji = emoji;
-  startGame();
-}
-
-function startGame() {
-  G.queue = shuffle(PROBLEMS).slice(0, 15);
-  G.current = 0; G.score = 0; G.byTopic = {};
-  document.getElementById('g-emoji').textContent = G.emoji;
-  document.getElementById('g-name').textContent = G.player;
-  document.getElementById('g-total').textContent = G.queue.length;
-  showScreen('game');
-  renderQuestion();
-}
-
-function restartGame() {
-  G.queue = shuffle(PROBLEMS).slice(0, 15);
-  G.current = 0; G.score = 0; G.byTopic = {};
-  showScreen('game');
-  renderQuestion();
-}
-
-// ─── RENDER ──────────────────────────────────────────────────────────────────
-function renderQuestion() {
-  const q = G.queue[G.current];
-  G.stepsDone = { U: false, C: false, S: false, A: false, C2: false };
-  G.answered = false;
+// ─── QUESTION LOADING ────────────────────────────────────────────────────
+function loadQuestion() {
+  const q = G.questions[G.idx];
+  G.currentStep = 'R';
+  G.answerCorrect = false;
 
   // Header
-  document.getElementById('g-score').textContent = G.score;
-  document.getElementById('g-qnum').textContent = `Question ${G.current + 1} of ${G.queue.length}`;
-  document.getElementById('g-prog').style.width = (G.current / G.queue.length * 100) + '%';
-  document.getElementById('g-topic').textContent = q.topic;
-  document.getElementById('g-qtext').textContent = q.text;
+  document.getElementById('quiz-player-tag').textContent =
+    G.player + (G.player === 'Viktor' ? ' 🦁' : ' 🐯');
+  document.getElementById('quiz-progress').textContent =
+    `Question ${G.idx + 1} of ${SESSION_SIZE}`;
+  document.getElementById('progress-fill').style.width =
+    (G.idx / SESSION_SIZE * 100) + '%';
 
-  // Reset all steps
-  ['U','C','S','A','C2','sol'].forEach(id => {
-    const el = document.getElementById('step-' + id);
-    el.className = 'scaffold-step' + (id === 'U' ? ' active' : ' locked');
+  // Step tracker
+  document.querySelectorAll('.step-dot').forEach(d => {
+    d.classList.remove('active', 'done');
   });
+  document.querySelector('.step-dot[data-step="R"]').classList.add('active');
 
-  // Step U options
+  // Hide all panels
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('visible'));
+  document.getElementById('panel-R').classList.add('visible');
+  document.getElementById('btn-next').classList.remove('visible');
+
+  // Fill R panel
+  document.getElementById('q-text').textContent = q.q;
+
+  // Fill U panel
   const uOpts = document.getElementById('u-options');
-  const shuffledOpts = q.understandOptions.map((o,i) => ({text:o, orig:i}));
-  // shuffle displayed options
-  for (let i = shuffledOpts.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i+1));
-    [shuffledOpts[i], shuffledOpts[j]] = [shuffledOpts[j], shuffledOpts[i]];
-  }
-  uOpts.innerHTML = shuffledOpts.map(o =>
-    `<button class="step-opt" onclick="selectUnderstand(${o.orig}, this)">${o.text}</button>`
+  uOpts.innerHTML = '';
+  shuffle([...q.understand.map((t, i) => ({ t, i }))]).forEach(({ t, i }) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = t;
+    btn.onclick = () => answerU(i === q.correctU, btn, uOpts);
+    uOpts.appendChild(btn);
+  });
+  document.getElementById('u-feedback').className = 'feedback-banner';
+  document.getElementById('u-feedback').textContent = '';
+
+  // Fill C panel
+  const cOpts = document.getElementById('c-options');
+  cOpts.innerHTML = '';
+  const opLabels = [
+    { sym: '+', label: 'Add' },
+    { sym: '-', label: 'Subtract' },
+    { sym: '×', label: 'Multiply' },
+    { sym: '÷', label: 'Divide' }
+  ];
+  opLabels.forEach((op, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'op-btn';
+    btn.innerHTML = `${op.sym}<br><span style="font-size:0.6rem;font-weight:600;opacity:0.7">${op.label}</span>`;
+    btn.onclick = () => answerC(i === q.correctC, btn, cOpts);
+    cOpts.appendChild(btn);
+  });
+  document.getElementById('c-feedback').className = 'feedback-banner';
+  document.getElementById('c-feedback').textContent = '';
+
+  // Fill S panel
+  document.getElementById('s-hint').innerHTML = q.hint;
+
+  // Fill A panel
+  const aInput = document.getElementById('a-input');
+  aInput.value = '';
+  aInput.className = 'answer-input';
+  aInput.disabled = false;
+  document.getElementById('a-unit').textContent = q.unit || '';
+  document.getElementById('a-feedback').className = 'feedback-banner';
+  document.getElementById('a-feedback').textContent = '';
+
+  // Fill CK panel
+  document.getElementById('ck-prompt').textContent = q.checkPrompt;
+  document.getElementById('ck-feedback').className = 'feedback-banner';
+  document.getElementById('ck-feedback').textContent = '';
+  const btnYes = document.getElementById('btn-yes');
+  const btnNo = document.getElementById('btn-no');
+  btnYes.disabled = false;
+  btnNo.disabled = false;
+  btnYes.className = 'check-btn yes-btn';
+  btnNo.className = 'check-btn no-btn';
+
+  // Fill WS panel
+  const wsList = document.getElementById('ws-steps');
+  wsList.innerHTML = q.solution.map((s, i) =>
+    `<li><div class="ws-num">${i + 1}</div><span>${s}</span></li>`
   ).join('');
-  document.getElementById('u-feedback').style.display = 'none';
-
-  // Step C reset
-  document.querySelectorAll('.op-btn').forEach(b => { b.className = 'op-btn'; b.onclick = () => selectOp(b.dataset.op); });
-  document.getElementById('c-feedback').style.display = 'none';
-
-  // Step S
-  document.getElementById('s-working').innerHTML = q.working.replace(/\n/g, '<br>');
-
-  // Step A
-  const ai = document.getElementById('a-input');
-  ai.value = ''; ai.className = 'answer-input'; ai.disabled = false;
-  document.getElementById('a-unit').textContent = q.unit;
-  document.getElementById('a-feedback').style.display = 'none';
-
-  // Step C2
-  document.querySelectorAll('.sense-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('c2-prompt').textContent = q.senseCheck;
-  document.getElementById('c2-feedback').style.display = 'none';
-
-  // Solution
-  document.getElementById('sol-steps').innerHTML = q.solution.map(s =>
-    `<div class="sol-step"><div class="sol-num">${s.n}</div><div>${s.t}</div></div>`
-  ).join('');
-
-  // Next btn
-  document.getElementById('g-next-btn').classList.remove('visible');
 }
 
-// ─── STEP U ──────────────────────────────────────────────────────────────────
-function selectUnderstand(origIdx, btn) {
-  if (G.stepsDone.U) return;
-  const q = G.queue[G.current];
-  const correct = origIdx === q.correctUnderstand;
+// ─── STEP ADVANCING ──────────────────────────────────────────────────────
+function advanceStep(next) {
+  // Mark current done, activate next
+  const current = G.currentStep;
+  document.querySelector(`.step-dot[data-step="${current}"]`).classList.remove('active');
+  document.querySelector(`.step-dot[data-step="${current}"]`).classList.add('done');
 
-  document.querySelectorAll('#u-options .step-opt').forEach(b => b.disabled = true);
-  btn.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+  G.currentStep = next;
+  const nextDot = document.querySelector(`.step-dot[data-step="${next}"]`);
+  if (nextDot) nextDot.classList.add('active');
+
+  const panelMap = { R: 'panel-R', U: 'panel-U', C: 'panel-C', S: 'panel-S', A: 'panel-A', CK: 'panel-CK', WS: 'panel-WS' };
+  document.getElementById(panelMap[next]).classList.add('visible');
+  setTimeout(() => {
+    document.getElementById(panelMap[next]).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 100);
+}
+
+// ─── U: UNDERSTAND ───────────────────────────────────────────────────────
+function answerU(isCorrect, btn, container) {
+  const btns = container.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
 
   const fb = document.getElementById('u-feedback');
-  if (correct) {
-    fb.className = 'step-feedback ok';
-    fb.textContent = '✅ Exactly right! Now choose your operation.';
-    G.stepsDone.U = true;
-    markStepDone('U');
-    unlockStep('C');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = '✅ Exactly right! You know what this question is asking.';
+    fb.className = 'feedback-banner show good';
+    setTimeout(() => advanceStep('C'), 900);
   } else {
-    fb.className = 'step-feedback nope';
-    fb.textContent = `Not quite — the correct focus is: "${q.understandOptions[q.correctUnderstand]}". Try to read carefully what the question is asking.`;
-    // Still unlock next step after a moment
-    setTimeout(() => { G.stepsDone.U = true; markStepDone('U'); unlockStep('C'); }, 1800);
+    btn.classList.add('wrong');
+    // Reveal correct
+    const allOpts = [...container.querySelectorAll('.opt-btn')];
+    const q = G.questions[G.idx];
+    allOpts.forEach((b, i) => {
+      if (b.textContent === q.understand[q.correctU]) b.classList.add('revealed');
+    });
+    fb.textContent = '❌ Not quite. The correct focus is highlighted. Read it carefully then move on.';
+    fb.className = 'feedback-banner show bad';
+    setTimeout(() => advanceStep('C'), 1800);
   }
-  fb.style.display = 'block';
 }
 
-// ─── STEP C ──────────────────────────────────────────────────────────────────
-function selectOp(op) {
-  if (G.stepsDone.C) return;
-  const q = G.queue[G.current];
-  const correct = op === q.operation;
-
-  document.querySelectorAll('.op-btn').forEach(b => {
-    b.onclick = null;
-    if (b.dataset.op === op) b.classList.add(correct ? 'selected-correct' : 'selected-wrong');
-  });
+// ─── C: CHOOSE ───────────────────────────────────────────────────────────
+function answerC(isCorrect, btn, container) {
+  const btns = container.querySelectorAll('.op-btn');
+  btns.forEach(b => b.disabled = true);
 
   const fb = document.getElementById('c-feedback');
-  if (correct) {
-    fb.className = 'step-feedback ok';
-    fb.textContent = '✅ Correct operation! Now look at the working steps below.';
-    G.stepsDone.C = true;
-    markStepDone('C');
-    unlockStep('S');
-    setTimeout(() => { unlockStep('A'); }, 400);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = '✅ Correct operation! Now let\'s solve it.';
+    fb.className = 'feedback-banner show good';
+    setTimeout(() => advanceStep('S'), 900);
   } else {
-    fb.className = 'step-feedback nope';
-    const opNames = {'+':'addition','-':'subtraction','×':'multiplication','÷':'division'};
-    fb.textContent = `Not quite — this problem needs ${opNames[q.operation]}. Look at the working below to see why.`;
-    setTimeout(() => { G.stepsDone.C = true; markStepDone('C'); unlockStep('S'); unlockStep('A'); }, 1800);
+    btn.classList.add('wrong');
+    const q = G.questions[G.idx];
+    const ops = container.querySelectorAll('.op-btn');
+    ops[q.correctC].classList.add('revealed');
+    fb.textContent = '❌ Not quite. The correct operation is highlighted. Think about why, then continue.';
+    fb.className = 'feedback-banner show bad';
+    setTimeout(() => advanceStep('S'), 1800);
   }
-  fb.style.display = 'block';
 }
 
-// ─── STEP A ──────────────────────────────────────────────────────────────────
-function handleAnswerKey(e) {
-  if (e.key === 'Enter') checkAnswer();
+// ─── A: ANSWER ───────────────────────────────────────────────────────────
+function normalise(val) {
+  return val.toString().trim().toLowerCase()
+    .replace(/\s/g, '')
+    .replace(/£/g, '')
+    .replace(/,/g, '')
+    .replace(/hours?/g, 'h')
+    .replace(/minutes?/g, 'm')
+    .replace(/mins?/g, 'm');
 }
 
 function checkAnswer() {
-  if (G.stepsDone.A) return;
-  const q = G.queue[G.current];
-  const val = parseFloat(document.getElementById('a-input').value);
-  if (isNaN(val)) { document.getElementById('a-input').classList.add('shake'); setTimeout(() => document.getElementById('a-input').classList.remove('shake'), 400); return; }
+  const q = G.questions[G.idx];
+  const raw = document.getElementById('a-input').value;
+  const input = normalise(raw);
+  const correct = normalise(q.answer);
+  const isRight = input === correct;
 
-  const correct = Math.abs(val - q.answer) <= q.acceptRange;
-  G.stepsDone.A = true;
-  if (correct) G.score++;
-
-  // Track by topic
-  if (!G.byTopic[q.topic]) G.byTopic[q.topic] = { correct: 0, total: 0 };
-  G.byTopic[q.topic].total++;
-  if (correct) G.byTopic[q.topic].correct++;
-
-  const ai = document.getElementById('a-input');
-  ai.disabled = true;
-  ai.classList.add(correct ? 'correct' : 'incorrect');
-
+  G.answerCorrect = isRight;
+  const aInput = document.getElementById('a-input');
   const fb = document.getElementById('a-feedback');
-  const msgs = ['Brilliant! 🎉','Nailed it! ⭐','Spot on! 🌟','Perfect! 🚀'];
-  document.getElementById('af-title').textContent = correct ? msgs[Math.floor(Math.random()*msgs.length)] : 'Not quite...';
-  document.getElementById('af-body').textContent = correct
-    ? `The answer is ${q.answer} ${q.unit}. Great working!`
-    : `The correct answer is ${q.answer} ${q.unit}. Check the worked solution below to see where it went.`;
-  fb.className = 'answer-feedback ' + (correct ? 'correct' : 'incorrect');
-  fb.style.display = 'block';
+  aInput.disabled = true;
+  aInput.className = 'answer-input ' + (isRight ? 'correct' : 'wrong');
 
-  markStepDone('A');
-  document.getElementById('g-score').textContent = G.score;
-  unlockStep('C2');
+  if (isRight) {
+    G.score++;
+    G.byTopic[q.topic].correct++;
+    fb.textContent = `⭐ Spot on! The answer is ${q.answer}${q.unit ? ' ' + q.unit : ''}. Great working!`;
+    fb.className = 'feedback-banner show good';
+  } else {
+    fb.textContent = `❌ Not quite — the correct answer is ${q.answer}${q.unit ? ' ' + q.unit : ''}. Check the worked solution.`;
+    fb.className = 'feedback-banner show bad';
+  }
+  setTimeout(() => advanceStep('CK'), 1000);
 }
 
-// ─── STEP C2 ─────────────────────────────────────────────────────────────────
-function selectSense(makes) {
-  if (G.stepsDone.C2) return;
-  G.stepsDone.C2 = true;
+// ─── CK: CHECK ───────────────────────────────────────────────────────────
+function checkStep(saidYes) {
+  const btnYes = document.getElementById('btn-yes');
+  const btnNo = document.getElementById('btn-no');
+  btnYes.disabled = true;
+  btnNo.disabled = true;
 
-  document.querySelectorAll('.sense-btn').forEach(b => b.onclick = null);
-  event.target.classList.add('selected');
+  const fb = document.getElementById('ck-feedback');
 
-  const fb = document.getElementById('c2-feedback');
-  fb.className = 'step-feedback ok';
-  fb.textContent = makes
-    ? '✅ Great — always check your answer is reasonable!'
-    : '🤔 That\'s okay — look at the worked solution to see why it\'s right.';
-  fb.style.display = 'block';
+  if (saidYes) {
+    btnYes.classList.add('correct');
+    fb.textContent = '✅ Good — checking your answer is a great habit. Now see the full working below.';
+    fb.className = 'feedback-banner show good';
+  } else {
+    btnNo.classList.add('wrong');
+    fb.textContent = '🤔 That\'s okay — the worked solution below will help you see why it makes sense.';
+    fb.className = 'feedback-banner show bad';
+  }
 
-  markStepDone('C2');
-  unlockStep('sol');
-
+  // Show worked solution and Next button
   setTimeout(() => {
-    document.getElementById('g-next-btn').classList.add('visible');
-  }, 500);
+    advanceStep('WS');
+    document.getElementById('btn-next').classList.add('visible');
+    setTimeout(() => {
+      document.getElementById('btn-next').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
+  }, 800);
 }
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-function markStepDone(id) {
-  document.getElementById('step-' + id).classList.remove('active');
-  document.getElementById('step-' + id).classList.add('done');
-}
-
-function unlockStep(id) {
-  const el = document.getElementById('step-' + id);
-  el.classList.remove('locked');
-  el.classList.add('active');
-  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
+// ─── NEXT QUESTION ───────────────────────────────────────────────────────
 function nextQuestion() {
-  G.current++;
-  if (G.current >= G.queue.length) showResults();
-  else renderQuestion();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  G.idx++;
+  if (G.idx >= SESSION_SIZE) {
+    showResults();
+  } else {
+    loadQuestion();
+    window.scrollTo(0, 0);
+  }
 }
 
-// ─── RESULTS ─────────────────────────────────────────────────────────────────
+// ─── RESULTS ─────────────────────────────────────────────────────────────
 function showResults() {
-  const total = G.queue.length;
-  const pct = Math.round(G.score / total * 100);
-
-  document.getElementById('r-score').textContent = G.score;
-  document.getElementById('r-total').textContent = total;
-  document.getElementById('rs-correct').textContent = G.score;
-  document.getElementById('rs-wrong').textContent = total - G.score;
-  document.getElementById('rs-pct').textContent = pct + '%';
+  const pct = Math.round(G.score / SESSION_SIZE * 100);
+  document.getElementById('r-score').textContent = `${G.score}/${SESSION_SIZE}`;
 
   let trophy, title, msg;
-  if (pct >= 90) { trophy = '🏆'; title = 'Outstanding!'; msg = `${G.player}, that's exceptional reasoning. You broke every problem down perfectly.`; }
-  else if (pct >= 70) { trophy = '🌟'; title = 'Brilliant work!'; msg = `${G.player}, solid reasoning — you're using the steps well. Keep practising the topics you found tricky.`; }
-  else if (pct >= 50) { trophy = '👍'; title = 'Good effort!'; msg = `${G.player}, you're getting the method right. The more you use RUCSAC, the faster it'll click. Try again!`; }
-  else { trophy = '💪'; title = 'Keep going!'; msg = `${G.player}, the important thing is you used the steps. Reasoning takes practice — every attempt makes you better.`; }
+  if (pct >= 90) {
+    trophy = '🏆'; title = 'Outstanding!';
+    msg = `${G.player}, that's exceptional reasoning. You broke every problem down perfectly.`;
+  } else if (pct >= 70) {
+    trophy = '🌟'; title = 'Brilliant work!';
+    msg = `${G.player}, solid reasoning — you're using the steps well. Keep practising the tricky topics.`;
+  } else if (pct >= 50) {
+    trophy = '👍'; title = 'Good effort!';
+    msg = `${G.player}, you're getting the method right. The more you use RUCSAC, the faster it'll click. Try again!`;
+  } else {
+    trophy = '💪'; title = 'Keep going!';
+    msg = `${G.player}, the important thing is you used the steps. Reasoning takes practice — every attempt makes you better.`;
+  }
 
   document.getElementById('r-trophy').textContent = trophy;
   document.getElementById('r-title').textContent = title;
   document.getElementById('r-msg').textContent = msg;
 
-  // Topic breakdown
   const bd = document.getElementById('rs-breakdown');
   bd.innerHTML = Object.entries(G.byTopic).map(([topic, d]) => {
-    const p = Math.round(d.correct / d.total * 100);
+    const p = d.total > 0 ? Math.round(d.correct / d.total * 100) : 0;
     return `<div class="skill-row">
       <div class="skill-name">${topic}</div>
       <div class="skill-bar-wrap"><div class="skill-bar" style="width:${p}%"></div></div>
@@ -1400,9 +1226,6 @@ function showResults() {
   }).join('');
 
   showScreen('results');
-
-  // Send results email
-  sendReasoningEmail(G.player, G.score, total, G.byTopic);
 }
 </script>
 </body>
